@@ -1,0 +1,75 @@
+<!--
+  Generated template for the AsesoriaProfile page.
+
+  See http://ionicframework.com/docs/v2/components/#navigation for more info on
+  Ionic pages and navigation.
+-->
+<ion-header>
+
+
+</ion-header>
+
+
+<ion-content padding>
+
+
+
+  <ion-list class="profile-list">
+
+
+    <ion-item *ngIf="isloaded">
+      <h2>Información entregables</h2>
+      <h3 [style.color]="microempresario.entregables.meta.color">{{microempresario.entregables.meta.msg}}</h3>
+      <ul *ngIf="microempresario.entregables.meta.status == 3">
+        <li *ngFor="let entregable of microempresario.entregables.falta">
+          {{entregable}}
+        </li>
+      </ul>
+    </ion-item>
+
+    <ion-item>
+      <ion-avatar item-left>
+        <img src="{{microempresario.pic}}">
+      </ion-avatar>
+      <h2>{{microempresario.nombre}}</h2>
+      <h3>Microempresario</h3>
+    </ion-item>
+
+    <ion-item>
+      <ion-icon name="pin" item-left></ion-icon>
+      <h2>{{microempresario.nombre_negocio}}</h2>
+      <h3>Negocio</h3>
+    </ion-item>
+
+    <ion-item  *ngIf="isloaded">
+      <ion-icon name="time" item-left></ion-icon>
+      <h2>{{microempresario.entregables.formattedTime}}</h2>
+      <h3>Tiempo de asesoría</h3>
+    </ion-item>
+
+    <ion-item>
+      <ion-icon name="call" item-left></ion-icon>
+      <h2>{{microempresario.tel}}</h2>
+      <h3>Teléfono</h3>
+    </ion-item>
+
+    <ion-item>
+      <ion-icon name="contacts" item-left></ion-icon>
+      <h2>{{microempresario.giro}}</h2>
+      <h3>Giro</h3>
+    </ion-item>
+
+    <ion-item>
+      <ion-icon name="document" item-left></ion-icon>
+      <h2>{{microempresario.convocatoria}}</h2>
+      <h3>Convocatoria</h3>
+    </ion-item>
+
+    <ion-item>
+      <ion-icon name="person" item-left></ion-icon>
+      <h2>{{microempresario.edad}}</h2>
+      <h3>Edad</h3>
+    </ion-item>
+
+  </ion-list>
+</ion-content>

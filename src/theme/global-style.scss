@@ -1,0 +1,134 @@
+$text-input-wp-highlight-color: #65646a!important;
+$text-input-md-highlight-color: #65646a!important;
+.black-header{
+  .toolbar-background{
+    background: color($colors, dark)
+  }
+  .toolbar-title{
+    color: white;
+  }
+  .back-button{
+    color: white;
+  }
+}
+.green-header{
+  .toolbar-background{
+    background: color($colors, green)!important;
+  }
+  .toolbar-title{
+    color: white;
+  }
+  .back-button, .bar-buttons{
+    color: white;
+  }
+}
+.instruction{
+  width: 85%;
+  margin: 0 auto;
+  font-size: 18px;
+  color: #999;
+}
+.form-container{
+  width: 85%;
+  margin: 15px auto!important;
+  display: block;
+  .submit{
+    display: block!important;
+    margin: 30px auto;
+  }
+  ion-item{
+    padding: 0!important;
+    margin: 0 0 15px;
+  }
+}
+ion-input{
+  &:focus{
+    border-color: blue!important
+  }
+}
+ion-footer{
+  &::before{
+    height: 0!important;
+  }
+}
+.footer-inadem{
+  width: 100%;
+  background-color: transparent!important;
+  .circles{
+    width: 100%;
+    height: 30px;
+    background: url('../assets/inademCircles.svg') no-repeat right center;
+    background-size: auto 100%;
+    background-color: transparent!important;
+  }
+  .bar{
+    width: 100%;
+    height: 0;
+    background: #222;
+  }
+}
+.button-inner{
+  .spinner{
+    margin-right: 0.5rem;
+  }
+}
+.button-trigger{
+  width: 100%;
+  text-align: center;
+  margin-top: 20px;
+  font-size: 1.35rem;
+  text-transform: uppercase;
+  color: #999;
+  font-weight: 500;
+}
+.profile-list{
+  .icon{
+    color: #888;
+  }
+  .item{
+    margin: 0.5rem 0;
+  }
+  h3{
+    font-size: 0.8rem;
+    color: #bbb;
+  }
+}
+.sidebar{
+  .menu-slide-main{
+    width: 100%;
+    box-sizing: border-box;
+    padding: 4.42rem 1rem 1rem;
+    background: color($colors, green);
+    font-size: 1.5rem;
+    color: white;
+    font-weight: 500;
+    img{
+      width: 90%;
+      display: block;
+      margin-bottom: 1.2rem;
+    }
+  }
+  .item-block{
+    align-items: center;
+  }
+  .list{
+    margin: 1.5rem 0;
+    .icon{
+      color: rgb(124, 124, 124)!important;
+      font-size: 1.7em!important;
+    }
+    .item{
+      margin: 0.5rem 0;
+    }
+    .item-inner{
+      border-bottom: 0!important;
+      margin-left: 16px!important;
+    }
+  }
+}
+ion-textarea{
+  height: 100%;
+  .text-input{
+    height: 100%;
+  }
+}

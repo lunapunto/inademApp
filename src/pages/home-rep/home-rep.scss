@@ -1,0 +1,94 @@
+page-home-rep {
+  .list-header{
+    margin-bottom: 0!important;
+  },
+  .item-block{
+    background: white!important;
+  }
+  .titleList{
+    position: relative;
+    span{
+      position: absolute;
+      right: 0;
+      background: white;
+      z-index: 2;
+      font-size: 0.8em!important;
+      color: #bbb;
+      padding-top: 0.2em;
+    }
+  }
+  .item-wrapper{
+    border-bottom: 1px solid #eee;
+    .item-inner{
+      border-bottom: 0!important;
+    }
+  }
+  h4{
+    margin: 0.4em 0;
+  }
+  ion-item-options{
+    .button{
+      height: 100%!important;
+      margin: 0!important;
+    }
+
+  }
+  .refresher-pulling-icon, .refresher-refreshing-icon{
+    font-size: 20px;
+    color: #ccc;
+  }
+  ion-spinner{
+    color: orange!important;
+  }
+
+  .menu-inner{
+    .scroll-content{
+      background: white!important;
+    }
+  }
+  ion-menu{
+    z-index: 2000!important;
+  }
+  ion-item-options{
+    border-bottom: 0!important;
+  }
+  .scroll-content{
+    padding-bottom: 3rem;
+  }
+}
+
+.bottomLogout{
+  width: 100%;
+  position: absolute;
+  bottom: 0.5em;
+  left: 0;
+  h1{
+    font-size: 1.1em;
+    width: 100%;
+    text-align: center;
+    color: #888;
+  }
+  h5{
+    font-size: 1em;
+    width: 100%;
+    text-align: center;
+    color: #bbb;
+  }
+  h4{
+    font-size: 1em;
+    text-align: center;
+    text-transform: uppercase;
+  }
+}
+
+.notvisitas{
+  text-align: center;
+  font-size: 1.2em;
+  color: #aaa;
+  box-sizing: border-box;
+  padding: 10px;
+}
+
+.alert-radio-label{
+  white-space: normal!important;
+}

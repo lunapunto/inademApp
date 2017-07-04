@@ -1,0 +1,22 @@
+page-asesoria {
+  .asesoria-header{
+    ion-icon{
+      vertical-align: bottom;
+      margin-right: 1rem;
+    }
+  }
+  li{
+    white-space: normal!important;
+    margin-bottom: 5px;
+    font-size: 0.8em;
+  }
+}
+.submitlike{
+  width: 100%!important;
+  text-align: center;
+  color: white;
+  font-size: 1.2em;
+  text-transform: uppercase;
+  background: color($colors, green);
+  padding: 12px 0;
+}

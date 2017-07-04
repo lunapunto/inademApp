@@ -1,0 +1,27 @@
+page-photos {
+  .photo-binder{
+    width: 100%;
+    .photo-thumb{
+      width: 100%;
+      height: 250px;
+      background: #ccc no-repeat center center;
+      background-size: cover;
+    }
+    .photo-actions{
+      width: 100%;
+      box-sizing: border-box;
+      padding: 10px 20px;
+      color: #555!important;
+      h1{
+        margin: 10px 0;
+      }
+      .button{
+        color: #888!important;
+      }
+      .icon{
+        margin-right: 10px;
+        color: #888!important;
+      }
+    }
+  }
+}

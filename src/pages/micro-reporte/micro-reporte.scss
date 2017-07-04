@@ -1,0 +1,36 @@
+page-micro-reporte {
+  .list{
+    width: 100%!important;
+    margin: 0!important;
+  }
+  .analisis-list{
+    .item{
+      box-sizing: border-box;
+      padding: 1em 0 1em 1em!important;
+      border-bottom: 1px solid #ccc;
+      h4{
+        color: #999;
+      }
+      &:last-child{
+        border-bottom: 0!important;
+      }
+      &:nth-child(even){
+        background: rgba(black, 0.05);
+      }
+      .item-inner{
+        border-bottom: 0!important;
+      }
+    }
+  }
+}
+.scroll-content, .footer{
+  background: #f0f0f0!important;
+}
+.item{
+  background: transparent;
+}
+
+
+.item-disabled{
+  opacity: 0.15!important;
+}

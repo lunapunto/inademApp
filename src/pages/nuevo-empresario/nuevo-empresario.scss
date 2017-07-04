@@ -1,0 +1,53 @@
+page-nuevo-empresario {
+  .timer{
+    color: #bbb!important;
+    .icon{
+      color: #bbb!important;
+      margin-right: 10px;
+    }
+  }
+  ion-fab[bottom]{
+    bottom: 70px;
+    -webkit-display: flex;
+    display: flex;
+    button{
+      margin-left: 20px;
+    }
+  }
+  .tab-button{
+    display: none;
+  }
+  .ion-page{
+    .scroll-content{
+      margin-top: 50px!important;
+    }
+  }
+  .swiper-pagination{
+    bottom: auto!important;
+    top: 0!important;
+    display: block!important;
+    .swiper-pagination-progressbar{
+      background: color($colors, green);
+    }
+    .swiper-pagination-bullet{
+      width: 40px!important;
+      margin: 0!important;
+      border-radius: 0!important;
+      &.swiper-pagination-bullet-active{
+        background: color($colors, green);
+      }
+    }
+  }
+  .swiper-slide{
+    align-items: flex-start!important;
+    overflow: hidden;
+    overflow-y: auto;
+    padding-bottom: 80px;
+    .slide-zoom{
+      margin-top: 40px;
+      .button[type=submit], .prev{
+        margin-top: 40px;
+      }
+    }
+  }
+}

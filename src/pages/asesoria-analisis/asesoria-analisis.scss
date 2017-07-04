@@ -1,0 +1,18 @@
+page-asesoria-analisis {
+  .item-inner{
+    border-bottom: 0!important;
+  }
+  .item{
+    box-sizing: border-box;
+    padding: 1rem;
+    h2, ion-icon, h4{
+      color: white;
+    }
+    &:nth-child(odd){
+      background: #888;
+    }
+    &:nth-child(even){
+      background: #666;
+    }
+  }
+}

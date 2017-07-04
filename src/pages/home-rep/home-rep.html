@@ -1,0 +1,136 @@
+<!--
+  Generated template for the HomeRep page.
+
+  See http://ionicframework.com/docs/v2/components/#navigation for more info on
+  Ionic pages and navigation.
+-->
+<ion-header class="white-header">
+
+  <ion-navbar>
+    <button ion-button menuToggle left>
+      <ion-icon name="menu"></ion-icon>
+    </button>
+    <ion-title>Mis asesorías</ion-title>
+  </ion-navbar>
+
+</ion-header>
+
+<ion-nav #mycontent [root]="rootPage"></ion-nav>
+<ion-menu [content]="mycontent" class="sidebar">
+<ion-content>
+
+  <div class="menu-slide-main">
+    <img src="assets/logoMenu.svg" />
+  </div>
+
+  <ion-list>
+
+    <ion-item (click)="menuTo('home', 0)">
+        <ion-icon name="phone-portrait" item-left></ion-icon>
+          Mis asesorías
+    </ion-item>
+    <ion-item (click)="menuTo('nuevo-empresario', 0)">
+        <ion-icon name="add" item-left></ion-icon>
+          Nueva asesoría
+    </ion-item>
+    <ion-item (click)="menuTo('avisos', 0)">
+        <ion-icon name="alert" item-left></ion-icon>
+          Avisos
+    </ion-item>
+    <ion-item (click)="showLegal()">
+      <ion-icon name="document" item-left></ion-icon>
+          Términos y condiciones
+    </ion-item>
+    <!--
+    <ion-item (click)="menuTo('avisos', 0)">
+        <ion-icon name="calculator" item-left></ion-icon>
+          Calculadora Energética
+    </ion-item>
+  -->
+    <ion-item (click)="promptSoporte()">
+        <ion-icon name="call" item-left></ion-icon>
+          Soporte
+    </ion-item>
+
+
+  </ion-list>
+
+  <div class="bottomLogout" (click)="logout()">
+    <h5>Aplicación del representante</h5>
+    <h5>Versión 1.19</h5>
+    <h1>{{email}}</h1>
+    <h4 >Cerrar sesión</h4>
+  </div>
+
+</ion-content>
+</ion-menu>
+
+
+<ion-content>
+
+  <ion-refresher (ionRefresh)="doRefresh($event)">
+      <ion-refresher-content >
+
+
+      </ion-refresher-content>
+    </ion-refresher>
+
+<div *ngIf="!isvisitas">
+  <p class="notvisitas">
+    No tienes visitas a negocios, o todas han sido archivadas.
+  </p>
+</div>
+
+
+<div *ngIf="isvisitas">
+
+    <ion-list *ngFor="let date of arrayOfKeys">
+      <ion-list-header>
+        {{ date }}
+      </ion-list-header>
+
+
+      <ion-item-sliding *ngFor="let visita of visitas[date]">
+      <ion-item>
+        <h2 class="titleList">ID #{{visita.id_negocio}}<span>{{visita.simple_date}}</span> </h2>
+        <h2 class="titleList">{{ visita.microempresario_info.nombre }} </h2>
+        <h4>{{ visita.microempresario_info.nombre_negocio }}</h4>
+        <h5>
+          Tiempo de visita: {{visita.entregables.formattedTime}}
+        </h5>
+        <h4 [style.color]="visita.entmsg.color">
+          {{ visita.entmsg.msg }}
+        </h4>
+
+      </ion-item>
+      <ion-item-options side="right">
+        <button ion-button color="yellow" (click)="showMicroempresario(visita.id_negocio)">
+          <ion-icon name="eye"></ion-icon>
+          Visualizar
+        </button>
+        <button ion-button color="green" *ngIf="visita.entmsg.status == 4" (click)="showAsesoria(visita.id_negocio)">
+          <ion-icon name="play"></ion-icon>
+          Reanudar
+        </button>
+        <button ion-button color="danger" (click)="archivarAsesoria(visita.id_negocio)">
+          <ion-icon name="filing"></ion-icon>
+          Eliminar
+        </button>
+        <!--
+        <button ion-button color="danger">
+          <ion-icon name="archive"></ion-icon>
+          Archivar
+        </button>
+      -->
+      </ion-item-options>
+    </ion-item-sliding>
+
+    </ion-list>
+  </div>
+
+
+  <ion-fab right bottom (click)="menuTo('nuevo-empresario', 0)">
+    <button ion-fab color="green"><ion-icon name="add"></ion-icon></button>
+  </ion-fab>
+
+</ion-content>

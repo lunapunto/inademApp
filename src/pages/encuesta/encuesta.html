@@ -1,0 +1,1191 @@
+<!--
+  Generated template for the Encuesta page.
+
+  See http://ionicframework.com/docs/v2/components/#navigation for more info on
+  Ionic pages and navigation.
+-->
+<ion-header class="green-header">
+
+  <ion-navbar>
+    <ion-title>Nueva asesoría</ion-title>
+  </ion-navbar>
+
+</ion-header>
+
+
+<ion-content padding #content>
+
+  <ion-slides #slides >
+
+  <ion-slide>
+  <!--PREGUNTA 1 - 4 -->
+  <form (ngSubmit)="submitFolio()">
+
+
+      <ion-item>
+        <ion-label floating>Año</ion-label>
+        <ion-select okText="Elegir" cancelText="Cancelar"  [(ngModel)]="form.year" name="year" (ionChange)="setConvocatorias()">
+          <ion-option>2015</ion-option>
+          <ion-option>2016</ion-option>
+        </ion-select>
+      </ion-item>
+      <ion-item>
+        <ion-label floating>¿A qué sector pertenece su empresa?</ion-label>
+        <ion-select okText="Elegir" cancelText="Cancelar"  name="sector" [(ngModel)]="form.sector" (ionChange)="setSizeEmpresa()">
+          <ion-option>Comercio</ion-option>
+          <ion-option>Servicios</ion-option>
+          <ion-option>Industria (Manufactura)</ion-option>
+        </ion-select>
+      </ion-item>
+      <ion-item>
+        <ion-label floating>¿Cuántos empleados tiene su empresa?</ion-label>
+        <ion-select okText="Elegir" cancelText="Cancelar"  name="empresaSize" [(ngModel)]="form.empresaSize" [disabled]="!empresaSizes.length" (ionChange)="setConvocatorias()">
+          <ion-option *ngFor="let size of empresaSizes">{{ size }}</ion-option>
+        </ion-select>
+      </ion-item>
+
+      <ion-item>
+        <ion-label floating>Seleccionar convocatoria</ion-label>
+        <ion-select okText="Elegir" cancelText="Cancelar"  name="convocatoria" (ionChange)="setGirosDisponibles()" [(ngModel)]="form.convocatoria" [disabled]="!convocatorias.length">
+          <ion-option *ngFor="let convocatoria of convocatorias">{{ convocatoria }}</ion-option>
+        </ion-select>
+      </ion-item>
+
+      <ion-item>
+        <ion-label floating>Folio (últimos 6 dígitos del proyecto)</ion-label>
+        <ion-input (change)="folioChange()" type="number"  [(ngModel)]="form.folio" name="folio"></ion-input>
+      </ion-item>
+
+      <button ion-button type="submit" *ngIf="form.convocatoria && form.folio">Siguiente</button>
+
+  </form>
+
+  </ion-slide>
+
+  <ion-slide>
+    <form (ngSubmit)="restriccionRFC()">
+      <ion-item>
+        <ion-label floating>¿Qué personalidad jurídica tiene su negocio?</ion-label>
+        <ion-select [(ngModel)]="form.negocio.personalidadjuridica" name="personalidadjuridica" okText="Elegir" cancelText="Cancelar"  [disabled]="blockfolio">
+          <ion-option>Física</ion-option>
+          <ion-option>Moral</ion-option>
+        </ion-select>
+      </ion-item>
+
+      <ion-item *ngIf="form.negocio.personalidadjuridica == 'Física'">
+        <ion-label floating>RFC del microempresario</ion-label>
+        <ion-input type="text" [disabled]="blockfolio"  [(ngModel)]="form.negocio.rfc" name="rfc"></ion-input>
+      </ion-item>
+
+      <ion-item *ngIf="form.negocio.personalidadjuridica == 'Moral'">
+        <ion-label floating>RFC de la empresa</ion-label>
+        <ion-input type="text" [disabled]="blockfolio" [(ngModel)]="form.negocio.rfc" name="rfc"></ion-input>
+      </ion-item>
+        <ion-item>
+          <ion-label floating>Giro</ion-label>
+          <ion-select okText="Elegir" cancelText="Cancelar"   [disabled]="!giros.length" [(ngModel)]="form.giro" name="giro" (change)="setExtraQ()">
+            <ion-option *ngFor="let giro of giros">{{ giro }}</ion-option>
+          </ion-select>
+        </ion-item>
+
+        <ion-item *ngIf="form.giro == 'Otro'">
+          <ion-label floating>¿Cuál?</ion-label>
+          <ion-input type="text" [(ngModel)]="form.giroc" name="gtor"></ion-input>
+        </ion-item>
+
+
+        <button ion-button type="submit" *ngIf="form.giro && (!showLectorTarjetas || form.noserieLector)">Siguiente</button>
+
+
+    </form>
+  </ion-slide>
+  <ion-slide>
+    <form (ngSubmit)="checkEmail()">
+
+        <ion-item>
+          <ion-label floating>E-mail microempresario</ion-label>
+          <ion-input type="email" [disabled]="blockfolio"   [(ngModel)]="form.microempresario.email" name="email"></ion-input>
+        </ion-item>
+        <ion-item>
+          <ion-label floating>Repetir E-mail microempresario</ion-label>
+          <ion-input type="email" [disabled]="blockfolio"  [(ngModel)]="form.microempresario.emailr" name="emailr"></ion-input>
+        </ion-item>
+
+
+        <button ion-button  type="submit" disabled *ngIf="!(form.microempresario.email && (form.microempresario.email == form.microempresario.emailr))">E-mail no coincide</button>
+
+        <button ion-button type="submit" *ngIf="form.microempresario.email && (form.microempresario.email == form.microempresario.emailr)">Siguiente</button>
+
+
+    </form>
+  </ion-slide>
+
+  <ion-slide>
+    <form (ngSubmit)="submitSlide($event)">
+
+
+
+        <ion-item>
+          <ion-label floating>Género del microempresario</ion-label>
+          <ion-select okText="Elegir" cancelText="Cancelar"  [(ngModel)]="form.microempresario.sexo" name="sexo">
+            <ion-option value="M">Masculino</ion-option>
+            <ion-option value="F">Femenino</ion-option>
+          </ion-select>
+        </ion-item>
+
+        <ion-item>
+          <ion-label floating>Nivel de estudios del microempresario</ion-label>
+          <ion-select okText="Elegir" cancelText="Cancelar"  [(ngModel)]="form.microempresario.estudios" name="estudios">
+            <ion-option *ngFor="let option of estudios">{{ option }}</ion-option>
+          </ion-select>
+        </ion-item>
+        <ion-item>
+          <ion-label floating>Nombre</ion-label>
+          <ion-input type="text" [disabled]="blockfolio" [(ngModel)]="form.microempresario.nombre" name="nombre"></ion-input>
+        </ion-item>
+        <ion-item>
+          <ion-label floating>Edad</ion-label>
+          <ion-input type="number" [(ngModel)]="form.microempresario.edad" name="edad"></ion-input>
+        </ion-item>
+
+        <button ion-button type="submit" *ngIf="form.microempresario.estudios && form.microempresario.sexo && form.microempresario.edad && form.microempresario.nombre ">Siguiente</button>
+
+
+    </form>
+  </ion-slide>
+
+
+
+  <ion-slide>
+    <form (ngSubmit)="submitSlide($event)">
+
+        <ion-item>
+          <ion-label floating>Teléfono microempresario</ion-label>
+          <ion-input type="tel" [(ngModel)]="form.microempresario.phone" name="phone"></ion-input>
+        </ion-item>
+        <ion-item>
+          <ion-label floating>Repetir Teléfono microempresario</ion-label>
+          <ion-input type="tel" [(ngModel)]="form.microempresario.phoner" name="phoner"></ion-input>
+        </ion-item>
+
+        <button ion-button  type="submit" disabled *ngIf="!(form.microempresario.phone && (form.microempresario.phone == form.microempresario.phoner))">Teléfono no coincide</button>
+
+        <button ion-button type="submit" *ngIf="form.microempresario.phone && (form.microempresario.phone == form.microempresario.phoner)">Siguiente</button>
+
+
+    </form>
+  </ion-slide>
+
+  <ion-slide>
+    <form (ngSubmit)="submitSlide($event)">
+
+
+
+        <ion-item>
+          <ion-label floating>¿Cuánto tiempo le dedica al negocio el microempresario?</ion-label>
+          <ion-select okText="Elegir" cancelText="Cancelar"  [(ngModel)]="form.microempresario.tiempodedica" name="tiempodedica">
+            <ion-option *ngFor="let option of tiempodedica">{{ option }}</ion-option>
+          </ion-select>
+        </ion-item>
+
+        <ion-item>
+          <ion-label floating>¿Por qué puso el negocio?</ion-label>
+          <ion-select okText="Elegir" cancelText="Cancelar"  [(ngModel)]="form.microempresario.porquenegocio" name="porquenegocio">
+            <ion-option *ngFor="let option of porquenegocio">{{ option }}</ion-option>
+          </ion-select>
+        </ion-item>
+
+        <ion-item *ngIf="form.microempresario.porquenegocio == 'Otro'">
+          <ion-label floating>¿Cuál?</ion-label>
+          <ion-input type="text" [(ngModel)]="form.microempresario.porquenegocioc" name="expersiencia"></ion-input>
+        </ion-item>
+
+        <ion-item>
+          <ion-label floating>¿Cuántos años de experiencia tiene en el negocio?</ion-label>
+          <ion-input type="number" [(ngModel)]="form.microempresario.experiencia" name="experiencia"></ion-input>
+        </ion-item>
+
+        <ion-item>
+          <ion-label floating>¿Cuántos dependientes económicos tiene el microempresario?</ion-label>
+          <ion-input type="number" [(ngModel)]="form.microempresario.dependientes" name="dependientes"></ion-input>
+        </ion-item>
+
+        <button ion-button type="submit" *ngIf="form.microempresario.experiencia && form.microempresario.tiempodedica && form.microempresario.porquenegocio && form.microempresario.dependientes">Siguiente</button>
+
+
+    </form>
+  </ion-slide>
+
+  <ion-slide>
+    <form (ngSubmit)="submitSlide($event)">
+
+      <ion-item>
+        <ion-label floating>¿El microempresario es propietario de otro negocio?</ion-label>
+        <ion-select okText="Elegir" cancelText="Cancelar"  [(ngModel)]="form.microempresario.espropietariootro" name="espropietariootro">
+          <ion-option>Sí</ion-option>
+          <ion-option>No</ion-option>
+        </ion-select>
+      </ion-item>
+
+      <ion-item>
+        <ion-label floating>¿Tiene acceso a internet en casa?</ion-label>
+        <ion-select okText="Elegir" cancelText="Cancelar"  [(ngModel)]="form.microempresario.internetcasa" name="internetcasa">
+          <ion-option>Sí</ion-option>
+          <ion-option>No</ion-option>
+        </ion-select>
+      </ion-item>
+
+      <ion-item>
+        <ion-label floating>¿Ha recibido alguna visita de instituciones o dependencias tanto estatales como federales?</ion-label>
+        <ion-select okText="Elegir" cancelText="Cancelar"  [(ngModel)]="form.microempresario.visitasinstitucionales" name="visitasinstitucionales">
+          <ion-option>Sí</ion-option>
+          <ion-option>No</ion-option>
+        </ion-select>
+      </ion-item>
+
+      <ion-item *ngIf="form.microempresario.visitasinstitucionales == 'Sí'">
+        <ion-label floating>¿Cuáles?</ion-label>
+        <ion-input type="text" [(ngModel)]="form.microempresario.visitasinstitucionales_c" name="visitasinstitucionales_c"></ion-input>
+      </ion-item>
+
+      <ion-item>
+        <ion-label floating>¿Algún miembro de la familia del microempresario ha recibido ayuda del programa PROSPERA?</ion-label>
+        <ion-select okText="Elegir" cancelText="Cancelar"  [(ngModel)]="form.microempresario.ayudaprospera" name="ayudaprospera">
+          <ion-option>Sí</ion-option>
+          <ion-option>No</ion-option>
+        </ion-select>
+      </ion-item>
+
+
+      <ion-item *ngIf="form.microempresario.ayudaprospera == 'Sí'">
+        <ion-label floating>Código PROSPERA</ion-label>
+        <ion-input type="text" [(ngModel)]="form.microempresario.ayudaprospera_c" name="ayudaprospera_c"></ion-input>
+      </ion-item>
+
+        <button ion-button type="submit" *ngIf="form.microempresario.espropietariootro && form.microempresario.internetcasa && form.microempresario.ayudaprospera && form.microempresario.visitasinstitucionales">Siguiente</button>
+
+
+    </form>
+  </ion-slide>
+
+  <ion-slide>
+    <form (ngSubmit)="submitSlide($event)">
+
+
+
+      <ion-item>
+        <ion-label floating>¿El negocio está a su nombre?</ion-label>
+        <ion-select okText="Elegir" cancelText="Cancelar"  [(ngModel)]="form.negocio.negocionombre" name="negocionombre">
+          <ion-option>Sí</ion-option>
+          <ion-option>No</ion-option>
+        </ion-select>
+      </ion-item>
+      <ion-item>
+        <ion-label floating>Nombre del negocio</ion-label>
+        <ion-input type="text" [(ngModel)]="form.negocio.nombre" name="nombrenegocio"></ion-input>
+      </ion-item>
+
+
+
+        <button ion-button type="submit" *ngIf="form.negocio.negocionombre && form.negocio.nombre">Siguiente</button>
+
+
+    </form>
+  </ion-slide>
+
+
+  <ion-slide>
+    <form (ngSubmit)="submitSlide($event)">
+
+      <ion-item>
+        <ion-label floating>¿Tiene correo electrónico para la empresa?</ion-label>
+        <ion-select okText="Elegir" cancelText="Cancelar"  [(ngModel)]="form.negocio.tienecorreoempresa" name="tienecorreoempresa">
+          <ion-option>Sí</ion-option>
+          <ion-option>No</ion-option>
+        </ion-select>
+      </ion-item>
+
+      <ion-item *ngIf="form.negocio.tienecorreoempresa == 'Sí'">
+        <ion-label floating>E-mail empresa</ion-label>
+        <ion-input type="email" [(ngModel)]="form.negocio.correoempresa" name="correoempresa"></ion-input>
+      </ion-item>
+
+      <ion-item *ngIf="form.negocio.tienecorreoempresa == 'Sí'">
+        <ion-label floating>Repetir E-mail empresa</ion-label>
+        <ion-input type="email" [(ngModel)]="form.negocio.correoempresar" name="correoempresar"></ion-input>
+      </ion-item>
+
+
+
+  <button ion-button type="submit" *ngIf="!(form.negocio.tienecorreoempresa && (form.negocio.tienecorreoempresa == 'No' || (form.negocio.tienecorreoempresa == 'Sí' && form.negocio.correoempresa && (form.negocio.correoempresa == form.negocio.correoempresar))))" disabled>E-mail no coincide</button>
+        <button ion-button type="submit" *ngIf="form.negocio.tienecorreoempresa && (form.negocio.tienecorreoempresa == 'No' || (form.negocio.tienecorreoempresa == 'Sí' && form.negocio.correoempresa && (form.negocio.correoempresa == form.negocio.correoempresar)))">Siguiente</button>
+
+
+    </form>
+  </ion-slide>
+
+  <ion-slide>
+    <form (ngSubmit)="submitSlide($event)">
+
+      <ion-item>
+        <ion-label floating>¿Tiene teléfono para la empresa?</ion-label>
+        <ion-select okText="Elegir" cancelText="Cancelar"  [(ngModel)]="form.negocio.tienetelefonoempresa" name="tienetelefonoempresa">
+          <ion-option>Sí</ion-option>
+          <ion-option>No</ion-option>
+        </ion-select>
+      </ion-item>
+
+      <ion-item *ngIf="form.negocio.tienetelefonoempresa == 'Sí'">
+        <ion-label floating>Teléfono empresa</ion-label>
+        <ion-input type="tel" [(ngModel)]="form.negocio.telefonoempresa" name="telefonoempresa"></ion-input>
+      </ion-item>
+
+
+      <ion-item *ngIf="form.negocio.tienetelefonoempresa == 'Sí'">
+        <ion-label floating>Repetir Teléfono empresa</ion-label>
+        <ion-input type="tel" [(ngModel)]="form.negocio.telefonoempresar" name="telefonoempresar"></ion-input>
+      </ion-item>
+
+  <button ion-button type="submit" *ngIf="!(form.negocio.tienetelefonoempresa && (form.negocio.tienetelefonoempresa == 'No' || (form.negocio.tienetelefonoempresa == 'Sí' && form.negocio.telefonoempresa && (form.negocio.telefonoempresa == form.negocio.telefonoempresar))))" disabled>Teléfono no coincide</button>
+        <button ion-button type="submit" *ngIf="form.negocio.tienetelefonoempresa && (form.negocio.tienetelefonoempresa == 'No' || (form.negocio.tienetelefonoempresa == 'Sí' && form.negocio.telefonoempresa && (form.negocio.telefonoempresa == form.negocio.telefonoempresar)))">Siguiente</button>
+
+
+    </form>
+  </ion-slide>
+
+
+
+  <ion-slide>
+    <form (ngSubmit)="submitSlide($event)">
+
+
+      <ion-item >
+        <ion-label floating>Calle del negocio</ion-label>
+        <ion-input type="text" [(ngModel)]="form.direccion.calle" name="direccion-calle"></ion-input>
+      </ion-item>
+      <ion-item >
+        <ion-label floating>Número exterior</ion-label>
+        <ion-input type="number" [(ngModel)]="form.direccion.ext" name="direccion-ext"></ion-input>
+      </ion-item>
+      <ion-item >
+        <ion-label floating>Número interior</ion-label>
+        <ion-input type="number" [(ngModel)]="form.direccion.int" name="direccion-int"></ion-input>
+      </ion-item>
+
+
+
+
+      <button ion-button type="submit" *ngIf="form.direccion.ext && form.direccion.calle">Siguiente</button>
+
+
+
+    </form>
+  </ion-slide>
+
+  <ion-slide>
+    <form (ngSubmit)="submitSlide($event)">
+      <ion-item>
+
+        <ion-label floating>Colonia</ion-label>
+        <ion-input type="text" [(ngModel)]="form.direccion.colonia" name="direccion-colonia"></ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-label floating>Municipio / Delegación </ion-label>
+        <ion-input type="text" [(ngModel)]="form.direccion.mpo" name="direccion-mpo"></ion-input>
+      </ion-item>
+      <ion-item >
+        <ion-label floating>Código Postal</ion-label>
+        <ion-input type="number" (change)="cpLimit()" [(ngModel)]="form.direccion.cp" name="direccion-cp"></ion-input>
+      </ion-item>
+
+
+
+      <button ion-button type="submit" *ngIf="form.direccion.cp && (form.direccion.cp.length == 5) && form.direccion.mpo && form.direccion.colonia">Siguiente</button>
+
+
+
+    </form>
+  </ion-slide>
+
+  <ion-slide>
+    <form (ngSubmit)="submitSlide($event)">
+
+
+      <ion-item>
+        <ion-label floating>¿Cuántos metros cuadrados mide el negocio?</ion-label>
+        <ion-select okText="Elegir" cancelText="Cancelar"  [(ngModel)]="form.negociox.m2" name="m2">
+          <ion-option *ngFor="let option of m2pos">{{ option }}</ion-option>
+        </ion-select>
+      </ion-item>
+
+      <ion-item>
+        <ion-label floating>¿Cuenta con alguna de las siguientes tecnologías en el negocio?</ion-label>
+        <ion-select okText="Elegir" cancelText="Cancelar"  multiple="true" [(ngModel)]="form.negociox.tecs" name="tec">
+          <ion-option *ngFor="let option of tecs">{{ option }}</ion-option>
+        </ion-select>
+      </ion-item>
+
+
+      <ion-item>
+        <ion-label floating>¿Debe a proveedores?</ion-label>
+        <ion-select okText="Elegir" cancelText="Cancelar"  [(ngModel)]="form.negociox.debe" name="debe">
+          <ion-option>Sí</ion-option>
+          <ion-option>No</ion-option>
+        </ion-select>
+      </ion-item>
+
+
+      <ion-item *ngIf="form.negociox.debe == 'Sí'">
+        <ion-label floating>¿Sabe cuánto?</ion-label>
+        <ion-select okText="Elegir" cancelText="Cancelar"  [(ngModel)]="form.negociox.cuanto" name="cuanto">
+          <ion-option>Sí</ion-option>
+          <ion-option>No</ion-option>
+        </ion-select>
+      </ion-item>
+
+
+      <button ion-button type="submit" *ngIf="(form.negociox.debe == 'No' || (form.negociox.cuanto)) && form.negociox.debe && form.negociox.tecs && form.negociox.m2">Siguiente</button>
+
+    </form>
+  </ion-slide>
+
+  <ion-slide>
+    <form (ngSubmit)="submitSlide($event)">
+
+
+      <ion-item>
+        <ion-label floating>¿Cómo lleva el registro de sus operaciones</ion-label>
+        <ion-select okText="Elegir" cancelText="Cancelar"  [(ngModel)]="form.negociox.registro" name="registro">
+          <ion-option>Cuaderno</ion-option>
+          <ion-option>Computadora: software comercial</ion-option>
+          <ion-option>Otro</ion-option>
+          <ion-option>No lleva registros</ion-option>
+
+        </ion-select>
+      </ion-item>
+
+      <ion-item *ngIf="form.negociox.registro == 'Otro'">
+        <ion-label floating>¿Cuál?</ion-label>
+        <ion-input type="text" [(ngModel)]="form.negociox.registroc" name="gtords"></ion-input>
+      </ion-item>
+
+      <ion-item>
+        <ion-label floating>¿Cuántos clientes atiende al día?</ion-label>
+        <ion-select okText="Elegir" cancelText="Cancelar"  [(ngModel)]="form.negociox.clientes" name="clientesdia">
+          <ion-option *ngFor="let option of clientesdia">{{ option }}</ion-option>
+        </ion-select>
+      </ion-item>
+
+
+      <ion-item>
+        <ion-label floating>¿Vende productos digitales (tiempo aire)?</ion-label>
+        <ion-select okText="Elegir" cancelText="Cancelar"  [(ngModel)]="form.negociox.digitales" name="digitales">
+          <ion-option>Sí</ion-option>
+          <ion-option>No</ion-option>
+        </ion-select>
+      </ion-item>
+
+      <ion-item>
+        <ion-label floating>¿Recibe pago de servicios?</ion-label>
+        <ion-select okText="Elegir" cancelText="Cancelar"  [(ngModel)]="form.negociox.pagoserv" name="pagoserv">
+          <ion-option>Sí</ion-option>
+          <ion-option>No</ion-option>
+        </ion-select>
+      </ion-item>
+
+
+
+
+      <button ion-button type="submit" *ngIf="form.negociox.pagoserv && form.negociox.digitales && form.negociox.clientes && form.negociox.registro">Siguiente</button>
+
+    </form>
+  </ion-slide>
+
+
+  <ion-slide>
+    <form (ngSubmit)="submitSlide($event)">
+
+
+      <ion-item>
+        <ion-label floating>¿Recibe pago con tarjetas de programas sociales?</ion-label>
+        <ion-select okText="Elegir" cancelText="Cancelar"  [(ngModel)]="form.negociox.pagosprogramas" name="pagosprogramas">
+          <ion-option>Sí</ion-option>
+          <ion-option>No</ion-option>
+        </ion-select>
+      </ion-item>
+
+
+      <ion-item>
+        <ion-label floating>¿Ha utilizado alguna de las siguientes figuras de protección industrial?</ion-label>
+        <ion-select (ionChange)="setProteccion()" okText="Elegir" cancelText="Cancelar"   [(ngModel)]="form.negociox.proteccion" name="proteccion" multiple="true">
+          <ion-option *ngFor="let option of proteccion">{{ option }}</ion-option>
+        </ion-select>
+      </ion-item>
+
+      <ion-item>
+        <ion-label floating>¿Cuál de las siguientes formas de pago acepta?</ion-label>
+        <ion-select okText="Elegir" cancelText="Cancelar"  [(ngModel)]="form.negociox.formaspago" name="formaspago" multiple="true">
+          <ion-option *ngFor="let option of formaspago">{{ option }}</ion-option>
+        </ion-select>
+      </ion-item>
+
+      <ion-item *ngIf="form.negociox.formaspago == 'Otros'">
+        <ion-label floating>¿Cuáles?</ion-label>
+        <ion-input type="text" [(ngModel)]="form.negociox.formaspagoc" name="gtossdards"></ion-input>
+      </ion-item>
+
+      <ion-item>
+        <ion-label floating>¿Tiene servicios de internet en el negocio?</ion-label>
+        <ion-select okText="Elegir" cancelText="Cancelar"  [(ngModel)]="form.negociox.serviciosinternet" name="serviciosinternet">
+          <ion-option>Sí</ion-option>
+          <ion-option>No</ion-option>
+        </ion-select>
+      </ion-item>
+
+
+
+      <button ion-button type="submit" *ngIf="form.negociox.pagosprogramas && form.negociox.proteccion && form.negociox.serviciosinternet && form.negociox.formaspago">Siguiente</button>
+
+    </form>
+  </ion-slide>
+
+
+  <ion-slide>
+    <form (ngSubmit)="submitSlide($event)">
+
+
+      <ion-item>
+        <ion-label floating>¿Se asigna un salario?</ion-label>
+        <ion-select okText="Elegir" cancelText="Cancelar"  [(ngModel)]="form.salario.asigna" name="salario">
+          <ion-option>Sí</ion-option>
+          <ion-option>No</ion-option>
+        </ion-select>
+      </ion-item>
+
+      <ion-item  *ngIf="form.salario.asigna == 'Sí'">
+        <ion-label floating>¿A cuánto asciende su salario mínimo mensual en promedio?</ion-label>
+        <ion-input type="number" [(ngModel)]="form.salario.promedio" name="salario-promedio"></ion-input>
+      </ion-item>
+
+      <ion-item *ngIf="form.salario.asigna == 'Sí'">
+        <ion-label floating>¿El salario es parte de la nómina del negocio?</ion-label>
+        <ion-select okText="Elegir" cancelText="Cancelar"  [(ngModel)]="form.salario.esparte" name="esparte">
+          <ion-option>Sí</ion-option>
+          <ion-option>No</ion-option>
+        </ion-select>
+      </ion-item>
+
+      <ion-item *ngIf="form.salario.asigna == 'Sí'">
+        <ion-label floating>¿El salario es parte de las utilidades del negocio?</ion-label>
+        <ion-select okText="Elegir" cancelText="Cancelar"  [(ngModel)]="form.salario.esutilidades" name="esutilidades">
+          <ion-option>Sí</ion-option>
+          <ion-option>No</ion-option>
+        </ion-select>
+      </ion-item>
+
+      <ion-item *ngIf="form.salario.asigna == 'No'">
+        <ion-label floating>¿Cuál es la razón?</ion-label>
+        <ion-select okText="Elegir" cancelText="Cancelar"  [(ngModel)]="form.salario.razon" name="razon">
+          <ion-option *ngFor="let option of razonsalario">{{ option }}</ion-option>
+        </ion-select>
+      </ion-item>
+
+      <ion-item *ngIf="form.salario.asigna == 'No' && form.salario.razon == 'Otras razones'">
+        <ion-label floating>¿Cuáles</ion-label>
+        <ion-input type="text" [(ngModel)]="form.salario.razonc" name="gtossdasrds"></ion-input>
+      </ion-item>
+
+
+      <button ion-button type="submit" *ngIf="form.salario.asigna && ((form.salario.asigna == 'No' && form.salario.razon) || (form.salario.asigna == 'Sí' && form.salario.promedio && form.salario.esparte && form.salario.esutilidades))">Siguiente</button>
+
+    </form>
+  </ion-slide>
+
+
+  <ion-slide>
+    <form (ngSubmit)="submitSlide($event)">
+
+
+      <ion-item>
+        <ion-label floating>¿El Microempresario cotiza en el IMSS?</ion-label>
+        <ion-select okText="Elegir" cancelText="Cancelar"  [(ngModel)]="form.seguro.cotiza" name="seg-cotiza">
+          <ion-option>Sí</ion-option>
+          <ion-option>No</ion-option>
+        </ion-select>
+      </ion-item>
+
+      <ion-item>
+        <ion-label floating>¿Los trabajadores del negocio cotizan en el IMSS?</ion-label>
+        <ion-select okText="Elegir" cancelText="Cancelar"  [(ngModel)]="form.salario.trabajadorescot" name="trcot">
+          <ion-option>Sí</ion-option>
+          <ion-option>No</ion-option>
+        </ion-select>
+      </ion-item>
+
+      <ion-item  *ngIf="form.salario.trabajadorescot == 'Sí'">
+        <ion-label floating>¿Cuántos de los trabajadores del negocio cotizan en el IMSS?</ion-label>
+        <ion-input type="number" [(ngModel)]="form.salario.cuantoscot" name="cuantoscot"></ion-input>
+      </ion-item>
+
+      <ion-item  *ngIf="form.salario.trabajadorescot == 'No' || form.salario.cotiza == 'No'">
+        <ion-label floating>¿Por qué no cotizan ante el IMSS?</ion-label>
+        <ion-select okText="Elegir" cancelText="Cancelar"  [(ngModel)]="form.salario.pqnocot" name="pqnocot">
+          <ion-option>Por el alto costo</ion-option>
+          <ion-option>No sé cómo</ion-option>
+          <ion-option>No lo necesitamos</ion-option>
+        </ion-select>
+      </ion-item>
+
+      <ion-item  *ngIf="form.salario.trabajadorescot == 'No'">
+        <ion-label floating>¿Los trabajadores están inscritos y reciben servicios del Seguro Popular?</ion-label>
+        <ion-select okText="Elegir" cancelText="Cancelar"  [(ngModel)]="form.salario.segpoptra" name="segpoptra">
+          <ion-option>Sí</ion-option>
+          <ion-option>No</ion-option>
+        </ion-select>
+      </ion-item>
+
+      <ion-item  *ngIf="form.salario.trabajadorescot == 'No'">
+        <ion-label floating>¿El microempresario está inscrito y recibe servicios del Seguro Popular?</ion-label>
+        <ion-select okText="Elegir" cancelText="Cancelar"  [(ngModel)]="form.salario.segpopmicro" name="segpopmicro">
+          <ion-option>Sí</ion-option>
+          <ion-option>No</ion-option>
+        </ion-select>
+      </ion-item>
+
+
+
+
+      <button ion-button type="submit" *ngIf="form.seguro.cotiza && form.salario.trabajadorescot">Siguiente</button>
+
+    </form>
+  </ion-slide>
+
+  <ion-slide>
+    <form (ngSubmit)="submitSlide($event)">
+      <ion-item>
+        <ion-label floating>¿El microempresario tiene firma electrónica del SAT como persona física?</ion-label>
+        <ion-select okText="Elegir" cancelText="Cancelar"  [(ngModel)]="form.financiera.tienefirmafis" name="firmafis">
+          <ion-option>Sí</ion-option>
+          <ion-option>No</ion-option>
+        </ion-select>
+      </ion-item>
+
+      <ion-item>
+        <ion-label floating>¿Tiene firma electrónica del SAT para el negocio?</ion-label>
+        <ion-select okText="Elegir" cancelText="Cancelar"  [(ngModel)]="form.financiera.tienefirmaneg" name="tienefirmaneg">
+          <ion-option>Sí</ion-option>
+          <ion-option>No</ion-option>
+        </ion-select>
+      </ion-item>
+
+      <ion-item>
+        <ion-label floating>¿Tiene cuenta bancaria para el negocio?</ion-label>
+        <ion-select okText="Elegir" cancelText="Cancelar"  [(ngModel)]="form.financiera.banconeg" name="banconeg">
+          <ion-option>Sí</ion-option>
+          <ion-option>No</ion-option>
+        </ion-select>
+      </ion-item>
+
+      <ion-item>
+        <ion-label floating>¿Tiene cuenta bancaria personal?</ion-label>
+        <ion-select okText="Elegir" cancelText="Cancelar"  [(ngModel)]="form.financiera.bancoper" name="bancoper">
+          <ion-option>Sí</ion-option>
+          <ion-option>No</ion-option>
+        </ion-select>
+      </ion-item>
+
+
+
+
+      <button ion-button type="submit" *ngIf="form.financiera.bancoper && form.financiera.banconeg && form.financiera.tienefirmaneg && form.financiera.tienefirmafis">Siguiente</button>
+
+    </form>
+  </ion-slide>
+
+
+  <ion-slide>
+    <form (ngSubmit)="submitSlide($event)">
+
+      <ion-item>
+        <ion-label floating>¿Cuánto vende al mes?</ion-label>
+        <ion-input min="1" type="number" [(ngModel)]="form.financiera.ventasmes" name="ventasmes"></ion-input>
+      </ion-item>
+
+
+      <ion-item>
+        <ion-label floating>¿Cuántos ingresos extras tiene al mes?</ion-label>
+        <ion-input type="number" [(ngModel)]="form.financiera.extrasmes" name="extrasmes"></ion-input>
+      </ion-item>
+
+      <ion-item>
+        <ion-label floating>¿Cuánto compra al mes (cuáles son sus costos de venta)?</ion-label>
+        <ion-input min="1" type="number" [(ngModel)]="form.financiera.comprasmes" name="comprasmes"></ion-input>
+      </ion-item>
+
+      <!--AQUÍ VA FILA 98-->
+      <!--copy temporal-->
+      <ion-item>
+        <ion-label floating>¿Tiene alguno de los siguientes gastos fijos al mes?</ion-label>
+        <ion-select okText="Elegir" cancelText="Cancelar"  [(ngModel)]="form.financiera.gastosfijos" name="fijos" multiple="true">
+          <ion-option *ngFor="let option of gastosfijos">{{ option }}</ion-option>
+        </ion-select>
+      </ion-item>
+
+      <ion-item *ngFor="let type of form.financiera.gastosfijos">
+        <ion-label floating>Monto del gasto ({{ type }})</ion-label>
+        <ion-input type="number" min="1" required></ion-input>
+      </ion-item>
+
+
+
+      <button ion-button type="submit" *ngIf="form.financiera.ventasmes && form.financiera.extrasmes && form.financiera.gastosfijos && form.financiera.comprasmes">Siguiente</button>
+
+    </form>
+  </ion-slide>
+
+  <ion-slide>
+    <form (ngSubmit)="submitSlide($event)">
+
+      <ion-item>
+        <ion-label floating>¿Divide los ingresos y gastos del negocio de los personales?</ion-label>
+        <ion-select okText="Elegir" cancelText="Cancelar"  [(ngModel)]="form.financiera.divideingresos" name="divideingresos">
+          <ion-option>Sí</ion-option>
+          <ion-option>No</ion-option>
+        </ion-select>
+      </ion-item>
+
+      <ion-item>
+        <ion-label floating>¿Otros gastos personales y del hogar al mes?</ion-label>
+        <ion-input type="number" [(ngModel)]="form.financiera.otrosgastos" name="otrosgastos"></ion-input>
+      </ion-item>
+
+      <ion-item>
+        <ion-label floating>¿Ha utilizado crédito?</ion-label>
+        <ion-select okText="Elegir" cancelText="Cancelar"  [(ngModel)]="form.financiera.hacredito" name="hacredito">
+          <ion-option>Sí</ion-option>
+          <ion-option>No</ion-option>
+        </ion-select>
+      </ion-item>
+
+
+
+      <button ion-button type="submit" *ngIf="form.financiera.hacredito && form.financiera.divideingresos">Siguiente</button>
+
+    </form>
+  </ion-slide>
+
+  <ion-slide>
+    <form (ngSubmit)="submitSlide($event)">
+
+      <ion-item>
+        <ion-label floating>¿Tiene créditos personales actualmente el microempresario?</ion-label>
+        <ion-select okText="Elegir" cancelText="Cancelar"  [(ngModel)]="form.financiera.creditospers" name="creditospers">
+          <ion-option>Sí</ion-option>
+          <ion-option>No</ion-option>
+        </ion-select>
+      </ion-item>
+
+      <ion-item *ngIf="form.financiera.creditospers == 'Sí'">
+        <ion-label floating>¿Cuál es el monto del crédito?</ion-label>
+        <ion-input type="number" [(ngModel)]="form.financiera.montocred" name="montocred"></ion-input>
+      </ion-item>
+
+      <ion-item *ngIf="form.financiera.creditospers == 'Sí'">
+        <ion-label floating>¿Con quién tiene el crédito?</ion-label>
+        <ion-select okText="Elegir" cancelText="Cancelar"  [(ngModel)]="form.financiera.conquiencredito" name="conquiencredito">
+          <ion-option *ngFor="let option of instcreditopers">{{option}}</ion-option>
+        </ion-select>
+      </ion-item>
+
+      <ion-item *ngIf="form.financiera.creditospers == 'Otros'">
+        <ion-label floating>¿Con quién?</ion-label>
+        <ion-input type="number"  [(ngModel)]="form.financiera.conquiencreditoc" name="conquiencreditoc"></ion-input>
+      </ion-item>
+
+
+      <ion-item>
+        <ion-label floating>¿Tiene créditos con el negocio actualmente?</ion-label>
+        <ion-select okText="Elegir" cancelText="Cancelar"  [(ngModel)]="form.financiera.credsneg" name="credsneg">
+          <ion-option>Sí</ion-option>
+          <ion-option>No</ion-option>
+        </ion-select>
+      </ion-item>
+
+      <ion-item *ngIf="form.financiera.credsneg == 'Sí'">
+        <ion-label floating>¿Cuál es el monto del crédito?</ion-label>
+        <ion-input type="number" [(ngModel)]="form.financiera.credsnegmonto" name="credsnegmonto"></ion-input>
+      </ion-item>
+
+      <ion-item *ngIf="form.financiera.credsneg  == 'Sí'">
+        <ion-label floating>¿Con quién tiene el crédito?</ion-label>
+        <ion-select okText="Elegir" cancelText="Cancelar"  [(ngModel)]="form.financiera.credsneginst" name="credsneginst">
+          <ion-option *ngFor="let option of instcredito">{{option}}</ion-option>
+        </ion-select>
+      </ion-item>
+
+      <ion-item *ngIf="form.financiera.credsneginst == 'Otros'">
+        <ion-label floating>¿Con quién?</ion-label>
+        <ion-input type="text"  [(ngModel)]="form.financiera.credsneginstc" name="conquienccreditoc"></ion-input>
+      </ion-item>
+
+
+
+      <button ion-button type="submit" *ngIf="form.financiera.hacredito && form.financiera.divideingresos">Siguiente</button>
+
+    </form>
+  </ion-slide>
+
+  <ion-slide *ngIf="(form.convocatoria == '4.1 Desarrollo de Capacidades Empresariales para Microempresas.' || form.convocatoria == '5.2  Desarrollo de Capacidades Empresariales para Microempresas a través de la incorporación de Tecnologías de la Información y Comunicaciones (TIC’s).') && (form.giro == 'Abarrotes' || form.giro == 'Restaurante' || form.giro == 'Tienda de Ropa' || form.giro == 'Papelería' || form.giro == 'Mecánico' || form.giro == 'Ferretería y Tlapalería' || form.giro == 'Tortillería')">
+      <form (ngSubmit)="submitSlide($event)">
+    <div *ngIf="form.giro == 'Abarrotes'">
+      <ion-item>
+        <ion-label floating>¿Cuántos refrigeradores tiene?</ion-label>
+        <ion-select okText="Elegir" cancelText="Cancelar"  [(ngModel)]="form.extras.abarrotes.enfriadores" name="extras-abarrotesenf">
+          <ion-option>0</ion-option>
+          <ion-option>1 ó 2</ion-option>
+          <ion-option>3 ó 4</ion-option>
+          <ion-option>5 a 8</ion-option>
+          <ion-option>9 en adelante</ion-option>
+        </ion-select>
+      </ion-item>
+      <ion-item>
+        <ion-label floating>¿Cuántos refrigeradores son propios?</ion-label>
+        <ion-select okText="Elegir" cancelText="Cancelar"  [(ngModel)]="form.extras.abarrotes.enfriadorespropios" name="extras-abarrotesenfprop">
+          <ion-option>0</ion-option>
+          <ion-option>Todos</ion-option>
+          <ion-option>Otra cantidad</ion-option>
+        </ion-select>
+      </ion-item>
+      <ion-item *ngIf="form.extras.abarrotes.enfriadorespropios == 'Otra cantidad'">
+        <ion-label floating>Cantidad</ion-label>
+        <ion-input type="number" [(ngModel)]="form.extras.abarrotes.enfriadorespropiosc" name="extras-abarrotesenfprop"></ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-label floating>¿Cuántas vitrinas tiene?</ion-label>
+        <ion-select okText="Elegir" cancelText="Cancelar"  [(ngModel)]="form.extras.abarrotes.vitrinas" name="extras-abarrotesvitr">
+          <ion-option>0</ion-option>
+          <ion-option>1 ó 2</ion-option>
+          <ion-option>3 ó 4</ion-option>
+          <ion-option>5 a 8</ion-option>
+          <ion-option>9 en adelante</ion-option>
+        </ion-select>
+      </ion-item>
+      <ion-item>
+        <ion-label floating>¿Cuántas vitrinas son propias?</ion-label>
+        <ion-select okText="Elegir" cancelText="Cancelar"  [(ngModel)]="form.extras.abarrotes.vitrinaspropias" name="extras-abarrotesvitrprop">
+          <ion-option>0</ion-option>
+          <ion-option>Todas</ion-option>
+          <ion-option>Otra cantidad</ion-option>
+        </ion-select>
+      </ion-item>
+      <ion-item *ngIf="form.extras.abarrotes.vitrinaspropias == 'Otra cantidad'">
+        <ion-label floating>Cantidad</ion-label>
+        <ion-input type="number" [(ngModel)]="form.extras.abarrotes.vitrinaspropiasc" name="extras-abarrotesvitrprop"></ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-label floating>¿Cuenta con vitrinas de carnes frías?</ion-label>
+        <ion-select okText="Elegir" cancelText="Cancelar"  [(ngModel)]="form.extras.abarrotes.vitrinacarnes" name="extras-abarrotescarnes">
+          <ion-option>Sí</ion-option>
+          <ion-option>No</ion-option>
+        </ion-select>
+      </ion-item>
+      <ion-item>
+        <ion-label floating>¿Cuántos estantes de pan y/o botanas tiene?</ion-label>
+        <ion-select okText="Elegir" cancelText="Cancelar"  [(ngModel)]="form.extras.abarrotes.estantes" name="extras-abarrotesestantes">
+          <ion-option>0</ion-option>
+          <ion-option>1 ó 2</ion-option>
+          <ion-option>3 ó 4</ion-option>
+          <ion-option>5 a 8</ion-option>
+          <ion-option>9 en adelante</ion-option>
+        </ion-select>
+      </ion-item>
+      <ion-item>
+        <ion-label floating>¿Cuenta con rebanadora y/o báscula?</ion-label>
+        <ion-select okText="Elegir" cancelText="Cancelar"  [(ngModel)]="form.extras.abarrotes.rebanadora" name="extras-abarrotesrebanadora">
+          <ion-option>Sí</ion-option>
+          <ion-option>No</ion-option>
+        </ion-select>
+      </ion-item>
+      <ion-item>
+        <ion-label floating>¿Cuántos productos diferentes vende al día?</ion-label>
+        <ion-select okText="Elegir" cancelText="Cancelar"  [(ngModel)]="form.extras.abarrotes.productosdiferente" name="extras-abarrotesproductosvende">
+          <ion-option>0 a 10</ion-option>
+          <ion-option>11 a 20</ion-option>
+          <ion-option>21 a 30</ion-option>
+          <ion-option>30 a 50</ion-option>
+          <ion-option>Más de 51</ion-option>
+        </ion-select>
+      </ion-item>
+      <ion-item>
+        <ion-label floating>¿Cuántos productos vende en total al día?</ion-label>
+        <ion-select okText="Elegir" cancelText="Cancelar"  [(ngModel)]="form.extras.abarrotes.productosvende" name="extras-abarrotesproductosvendea">
+          <ion-option>0 a 15</ion-option>
+          <ion-option>16 a 30</ion-option>
+          <ion-option>31 a 60</ion-option>
+          <ion-option>61 a 90</ion-option>
+          <ion-option>91 a 120</ion-option>
+          <ion-option>Más de 120</ion-option>
+        </ion-select>
+      </ion-item>
+      <ion-item>
+        <ion-label floating>¿Cobra con código de barras?</ion-label>
+        <ion-select okText="Elegir" cancelText="Cancelar"  [(ngModel)]="form.extras.abarrotes.cobrabarras" name="extras-abarrotescobra">
+          <ion-option>Sí</ion-option>
+          <ion-option>No</ion-option>
+        </ion-select>
+      </ion-item>
+    </div>
+    <div *ngIf="form.giro == 'Restaurante'">
+      <ion-item>
+        <ion-label floating>¿Cuántas mesas tiene?</ion-label>
+        <ion-select okText="Elegir" cancelText="Cancelar"  [(ngModel)]="form.extras.restaurantes.mesas" name="extras-resmesas">
+          <ion-option>1 ó 2</ion-option>
+          <ion-option>3 ó 4</ion-option>
+          <ion-option>5 a 8</ion-option>
+          <ion-option>9 en adelante</ion-option>
+        </ion-select>
+      </ion-item>
+      <ion-item>
+        <ion-label floating>¿Cuántos refrigeradores de proveedores tiene?</ion-label>
+        <ion-select okText="Elegir" cancelText="Cancelar"  [(ngModel)]="form.extras.restaurantes.refrigeradores" name="extras-resrefr">
+          <ion-option>0</ion-option>
+          <ion-option>1 ó 2</ion-option>
+          <ion-option>3 ó 4</ion-option>
+          <ion-option>5 a 8</ion-option>
+          <ion-option>9 en adelante</ion-option>
+        </ion-select>
+      </ion-item>
+      <ion-item>
+        <ion-label floating>¿Cuántos platillos sirve al día?</ion-label>
+        <ion-select okText="Elegir" cancelText="Cancelar"  [(ngModel)]="form.extras.restaurantes.platillos" name="extras-resreplat">
+          <ion-option>Menos de 30</ion-option>
+          <ion-option>31 a 60</ion-option>
+          <ion-option>61 a 90</ion-option>
+          <ion-option>91 a 120</ion-option>
+          <ion-option>121 en adelante</ion-option>
+        </ion-select>
+      </ion-item>
+      <ion-item>
+        <ion-label floating>¿Cuenta con exclusividad de refrescos o cerveza?</ion-label>
+        <ion-select okText="Elegir" cancelText="Cancelar"  [(ngModel)]="form.extras.restaurantes.exclusividad" name="extras-resexcl">
+          <ion-option>Sí</ion-option>
+          <ion-option>No</ion-option>
+        </ion-select>
+      </ion-item>
+    </div>
+    <div *ngIf="form.giro == 'Tienda de Ropa'">
+      <ion-item>
+        <ion-label floating>¿Cuántos tipos distintos de prendas tiene?</ion-label>
+        <ion-select okText="Elegir" cancelText="Cancelar"  [(ngModel)]="form.extras.ropa.prendas" name="extras-ropastipos">
+          <ion-option>1 a 5</ion-option>
+          <ion-option>6 a 10</ion-option>
+          <ion-option>11 a 16</ion-option>
+          <ion-option>17 a 23</ion-option>
+          <ion-option>24 en adelante</ion-option>
+        </ion-select>
+      </ion-item>
+      <ion-item>
+        <ion-label floating>¿Cuántos marcas distintas tiene?</ion-label>
+        <ion-select okText="Elegir" cancelText="Cancelar"  [(ngModel)]="form.extras.ropa.marcas" name="extras-ropastiposs">
+          <ion-option>1 a 2</ion-option>
+          <ion-option>3 a 4</ion-option>
+          <ion-option>5 a 8</ion-option>
+          <ion-option>9 en adelante</ion-option>
+        </ion-select>
+      </ion-item>
+      <ion-item>
+        <ion-label floating>¿Cuántas piezas distintas tiene?</ion-label>
+        <ion-select okText="Elegir" cancelText="Cancelar"  [(ngModel)]="form.extras.ropa.piezas" name="extras-ropastipossp">
+          <ion-option>1 a 5</ion-option>
+          <ion-option>6 a 10</ion-option>
+          <ion-option>11 a 16</ion-option>
+          <ion-option>17 a 23</ion-option>
+          <ion-option>24 en adelante</ion-option>
+        </ion-select>
+      </ion-item>
+      <ion-item>
+        <ion-label floating>¿En total cuántos productos vende al día?</ion-label>
+        <ion-select okText="Elegir" cancelText="Cancelar"  [(ngModel)]="form.extras.ropa.venta" name="extras-ropastiposspv">
+          <ion-option>1 a 5</ion-option>
+          <ion-option>6 a 10</ion-option>
+          <ion-option>11 a 16</ion-option>
+          <ion-option>17 a 23</ion-option>
+          <ion-option>24 en adelante</ion-option>
+        </ion-select>
+      </ion-item>
+    </div>
+    <div *ngIf="form.giro == 'Papelería'">
+      <ion-item>
+        <ion-label floating>¿Cuántas marcas distintas tiene?</ion-label>
+        <ion-select okText="Elegir" cancelText="Cancelar"  [(ngModel)]="form.extras.papelerias.marcas" name="extras-p">
+          <ion-option>1 a 10</ion-option>
+          <ion-option>11 a 20</ion-option>
+          <ion-option>21 a 30</ion-option>
+          <ion-option>31 a 40</ion-option>
+          <ion-option>40 en adelante</ion-option>
+        </ion-select>
+      </ion-item>
+      <ion-item>
+        <ion-label floating>¿Cuántos productos diferentes vende al día?</ion-label>
+        <ion-select okText="Elegir" cancelText="Cancelar"  [(ngModel)]="form.extras.papelerias.productos" name="extras-pa">
+          <ion-option>1 a 10</ion-option>
+          <ion-option>11 a 20</ion-option>
+          <ion-option>21 a 30</ion-option>
+          <ion-option>31 a 40</ion-option>
+          <ion-option>40 en adelante</ion-option>
+        </ion-select>
+      </ion-item>
+      <ion-item>
+        <ion-label floating>¿Cuántos productos vende al día?</ion-label>
+        <ion-select okText="Elegir" cancelText="Cancelar"  [(ngModel)]="form.extras.papelerias.productosdiario" name="extras-productosdiario">
+          <ion-option>1 a 30</ion-option>
+          <ion-option>31 a 60</ion-option>
+          <ion-option>60 a 90</ion-option>
+          <ion-option>91 a 120</ion-option>
+        </ion-select>
+      </ion-item>
+      <ion-item>
+        <ion-label floating>¿Tiene renta de computadoras?</ion-label>
+        <ion-select okText="Elegir" cancelText="Cancelar"  [(ngModel)]="form.extras.papelerias.rentacomputadoras" name="extras-rentacomp">
+          <ion-option>Sí</ion-option>
+          <ion-option>No</ion-option>
+        </ion-select>
+      </ion-item>
+      <ion-item>
+        <ion-label floating>¿Realiza servicios de copias e impresión?</ion-label>
+        <ion-select okText="Elegir" cancelText="Cancelar"  [(ngModel)]="form.extras.papelerias.copias" name="extras-copias">
+          <ion-option>Sí</ion-option>
+          <ion-option>No</ion-option>
+        </ion-select>
+      </ion-item>
+    </div>
+    <div *ngIf="form.giro == 'Mecánico'">
+      <ion-item>
+        <ion-label floating>¿Vende refacciones?</ion-label>
+        <ion-select okText="Elegir" cancelText="Cancelar"  [(ngModel)]="form.extras.mecanico.refacciones" name="extras-mr">
+          <ion-option>Sí</ion-option>
+          <ion-option>No</ion-option>
+        </ion-select>
+      </ion-item>
+      <ion-item>
+        <ion-label floating>¿Tiene escáner para diagnosticar?</ion-label>
+        <ion-select okText="Elegir" cancelText="Cancelar"  [(ngModel)]="form.extras.mecanico.escaner" name="extras-mre">
+          <ion-option>Sí</ion-option>
+          <ion-option>No</ion-option>
+        </ion-select>
+      </ion-item>
+      <ion-item>
+        <ion-label floating>¿Lleva un control de las reparaciones que realiza?</ion-label>
+        <ion-select okText="Elegir" cancelText="Cancelar"  [(ngModel)]="form.extras.mecanico.control" name="extras-control">
+          <ion-option>Sí</ion-option>
+          <ion-option>No</ion-option>
+        </ion-select>
+      </ion-item>
+      <ion-item>
+        <ion-label floating>¿Establece tiempos de entrega con los clientes?</ion-label>
+        <ion-select okText="Elegir" cancelText="Cancelar"  [(ngModel)]="form.extras.mecanico.tiempos" name="extras-mret">
+          <ion-option>Sí</ion-option>
+          <ion-option>No</ion-option>
+        </ion-select>
+      </ion-item>
+      <ion-item>
+        <ion-label floating>¿Sabe presupuestar una reparación?</ion-label>
+        <ion-select okText="Elegir" cancelText="Cancelar"  [(ngModel)]="form.extras.mecanico.presupuestar" name="extras-mretp">
+          <ion-option>Sí</ion-option>
+          <ion-option>No</ion-option>
+        </ion-select>
+      </ion-item>
+      <ion-item>
+        <ion-label floating>¿Vende aceites y anticongelantes?</ion-label>
+        <ion-select okText="Elegir" cancelText="Cancelar"  [(ngModel)]="form.extras.mecanico.aceites" name="extras-mretpa">
+          <ion-option>Sí</ion-option>
+          <ion-option>No</ion-option>
+        </ion-select>
+      </ion-item>
+      <ion-item>
+        <ion-label floating>¿Cuántas reparaciones realiza al día?</ion-label>
+        <ion-select okText="Elegir" cancelText="Cancelar"  [(ngModel)]="form.extras.mecanico.reparacionesdia" name="extras-mretpar">
+          <ion-option>1 a 5</ion-option>
+          <ion-option>6 a 10</ion-option>
+          <ion-option>11 a 15</ion-option>
+          <ion-option>16 a 20</ion-option>
+          <ion-option>Más de 20</ion-option>
+        </ion-select>
+      </ion-item>
+    </div>
+    <div *ngIf="form.giro == 'Ferretería y Tlapalería'">
+      <ion-item>
+        <ion-label floating>¿Cuántas marcas distintas tiene?</ion-label>
+        <ion-select okText="Elegir" cancelText="Cancelar"  [(ngModel)]="form.extras.ferreteria.marcas" name="extras-ferr">
+          <ion-option>1 a 30</ion-option>
+          <ion-option>31 a 60</ion-option>
+          <ion-option>61 a 90</ion-option>
+          <ion-option>91 a 120</ion-option>
+          <ion-option>Más de 120</ion-option>
+        </ion-select>
+      </ion-item>
+      <ion-item>
+        <ion-label floating>¿Cuántos productos distintos tiene?</ion-label>
+        <ion-select okText="Elegir" cancelText="Cancelar"  [(ngModel)]="form.extras.ferreteria.productos" name="extras-ferer">
+          <ion-option>1 a 30</ion-option>
+          <ion-option>31 a 60</ion-option>
+          <ion-option>61 a 90</ion-option>
+          <ion-option>91 a 120</ion-option>
+          <ion-option>Más de 120</ion-option>
+        </ion-select>
+      </ion-item>
+      <ion-item>
+        <ion-label floating>¿Cuántos productos vende al día?</ion-label>
+        <ion-select okText="Elegir" cancelText="Cancelar"  [(ngModel)]="form.extras.ferreteria.productosdia" name="extras-ferera">
+          <ion-option>1 a 30</ion-option>
+          <ion-option>31 a 60</ion-option>
+          <ion-option>61 a 90</ion-option>
+          <ion-option>91 a 120</ion-option>
+          <ion-option>Más de 120</ion-option>
+        </ion-select>
+      </ion-item>
+      <ion-item>
+        <ion-label floating>¿Es distribuidor autorizado de alguna gran empresa?</ion-label>
+        <ion-select okText="Elegir" cancelText="Cancelar"  [(ngModel)]="form.extras.ferreteria.distribuidor" name="extras-fereraa">
+          <ion-option>Sí</ion-option>
+          <ion-option>No</ion-option>
+        </ion-select>
+      </ion-item>
+    </div>
+    <div *ngIf="form.giro == 'Tortillería'">
+      <ion-item>
+        <ion-label floating>¿Aproximadamente cuántos kg vende al día?</ion-label>
+        <ion-input type="number" [(ngModel)]="form.extras.tortilleria.kilos" name="cdsdsdso"></ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-label floating>¿Vende algún producto diferente a tortillas?</ion-label>
+        <ion-select okText="Elegir" cancelText="Cancelar"  [(ngModel)]="form.extras.tortilleria.diferente" name="extras-fererassaaa">
+          <ion-option>Sí</ion-option>
+          <ion-option>No</ion-option>
+        </ion-select>
+      </ion-item>
+      <ion-item *ngIf="form.extras.tortilleria.diferente == 'Sí'">
+        <ion-label floating>¿Cuál?</ion-label>
+        <ion-input type="text" required [(ngModel)]="form.extras.tortilleria.diferente_" name="cdssdsdso"></ion-input>
+      </ion-item>
+    </div>
+    <button ion-button type="submit">Siguiente</button>
+
+  </form>
+  </ion-slide>
+
+  <ion-slide>
+
+    <button ion-button block (click)=goToNext(2)>Ir a fotos del empresario</button>
+
+  </ion-slide>
+
+
+</ion-slides>
+
+<!--
+<ion-fab bottom right>
+   <button ion-fab (click)="goToNext(0)"><ion-icon name="arrow-back"></ion-icon></button>
+ </ion-fab>
+ -->
+</ion-content>

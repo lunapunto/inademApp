@@ -1,0 +1,190 @@
+<!--
+  Generated template for the MicroPerfil page.
+
+  See http://ionicframework.com/docs/v2/components/#navigation for more info on
+  Ionic pages and navigation.
+-->
+
+
+<ion-header>
+
+
+
+</ion-header>
+
+<ion-content padding>
+
+
+  <ion-item-group>
+      <ion-item-divider >General</ion-item-divider>
+      <ion-item>
+        <h2>{{ m.nombre }}  <ion-icon name="female" *ngIf="m.sexo == 'F'"></ion-icon><ion-icon name="male" *ngIf="m.sexo == 'M'"></ion-icon></h2>
+        <p>Nombre del Microempresario</p>
+      </ion-item>
+      <ion-item>
+        <h2>{{ m.edad }}</h2>
+        <p>Edad</p>
+      </ion-item>
+      <ion-item>
+        <h2>{{ m.rfc}}</h2>
+        <p>RFC</p>
+      </ion-item>
+      <ion-item>
+        <h2>{{ m.convocatoria}} [{{m.convocatoria_year}}]</h2>
+        <p>Convocatoria</p>
+      </ion-item>
+      <ion-item>
+        <h2>{{m.numero_folio}}</h2>
+        <p>Folio</p>
+      </ion-item>
+      <ion-item>
+        <h2>{{m.sectorEmpresa}}</h2>
+        <p>Sector</p>
+      </ion-item>
+      <ion-item>
+        <h2>{{ m.numero_telefonico }}</h2>
+        <p>Teléfono ME</p>
+      </ion-item>
+      <ion-item>
+        <h2>{{m.fechaalta}}</h2>
+        <p>Dado de alta</p>
+      </ion-item>
+    </ion-item-group>
+    <ion-item-group>
+        <ion-item-divider>Microempresario</ion-item-divider>
+
+        <ion-item>
+          <h2>{{ m.estudios_usu }}</h2>
+          <p>Nivel de estudios</p>
+        </ion-item>
+        <ion-item>
+          <h2>{{ m.expe_anios }}</h2>
+          <p>Años de experiencia</p>
+        </ion-item>
+        <ion-item>
+          <h2>{{ m.tiempo_dedicado }}</h2>
+          <p>Tiempo que le dedica</p>
+        </ion-item>
+        <ion-item>
+          <h2>{{ m.motivo_negocio }}</h2>
+          <p>Motivo del negocio</p>
+        </ion-item>
+        <ion-item>
+          <h2>{{ m.dependientes_eco }}</h2>
+          <p>Dependientes Económicos</p>
+        </ion-item>
+        <ion-item>
+          <h2>{{ sino_bool(m.otro_negocio) }}</h2>
+          <p>¿Tiene otro negocio?</p>
+        </ion-item>
+        <ion-item>
+          <h2>{{ sino_bool(servicio_internet_casa) }}</h2>
+          <p>¿Tiene acceso a internet en casa?</p>
+        </ion-item>
+
+      </ion-item-group>
+    <ion-item-group>
+        <ion-item-divider>Negocio</ion-item-divider>
+        <ion-item>
+          <h2>{{ m.nombre_negocio}}</h2>
+          <p>Nombre del negocio</p>
+        </ion-item>
+        <ion-item>
+          <h2>{{ sino_bool(m.pertenece_negocio) }}</h2>
+          <p>¿El negocio está a su nombre?</p>
+        </ion-item>
+        <ion-item>
+          <h2>{{ m.tipoNegocio }}</h2>
+          <p>Personalidad Jurídica</p>
+        </ion-item>
+
+        <ion-item>
+          <h2>{{ m.EmailEmpresa }}</h2>
+          <p>E-mail empresa</p>
+        </ion-item>
+        <ion-item>
+          <h2>{{ m.TelEmpresa }}</h2>
+          <p>Teléfono empresa</p>
+        </ion-item>
+        <ion-item>
+          <h2>{{ m.giro}}</h2>
+          <p>Giro</p>
+        </ion-item>
+        <ion-item>
+          <h2>{{ m.cantidad_empleados }}</h2>
+          <p>Cantidad de empleados</p>
+        </ion-item>
+
+        <ion-item>
+          <h2>{{ sino_bool(m.visita_InstitucionDependencia) }}</h2>
+          <p>¿Ha recibido alguna visita de instituciones o dependencias tanto estatales como federales?</p>
+        </ion-item>
+
+        <ion-item>
+          <h2>{{ m.metros_cuadrados }}</h2>
+          <p>Metros cuadrados</p>
+        </ion-item>
+
+        <ion-item>
+          <h2>{{ sino_bool(m.atraso_pago_proveedores) }}</h2>
+          <p>¿Debe a proveedores?</p>
+        </ion-item>
+
+        <ion-item>
+          <h2>{{ m.como_registra }}</h2>
+          <p>¿Cómo registra?</p>
+        </ion-item>
+
+        <ion-item>
+          <h2>{{ m.cuantos_clientes }}</h2>
+          <p>¿Cuántos clientes atiende al día?</p>
+        </ion-item>
+
+        <ion-item>
+          <h2>{{ sino_bool(m.cuantos_clientes) }}</h2>
+          <p>¿Vende productos digitales (tiempo aire)?</p>
+        </ion-item>
+
+        <ion-item>
+          <h2>{{ sino_bool(m.cobra_servicios) }}</h2>
+          <p>¿Recibe pagos de servicios?</p>
+        </ion-item>
+
+        <ion-item>
+          <h2>{{ sino_bool(m.recibe_tarjetassociales) }}</h2>
+          <p>¿Recibe tarjetas sociales?</p>
+        </ion-item>
+
+        <ion-item>
+          <h2>{{ sino_bool(m.servicio_internet) }}</h2>
+          <p>¿Tiene servicios de internet en el negocio?</p>
+        </ion-item>
+
+      </ion-item-group>
+
+      <ion-item-group>
+          <ion-item-divider>Dirección negocio</ion-item-divider>
+          <ion-item>
+            <h2>{{ m.dir_calle }} #{{m.dir_num_ext}}</h2>
+            <p>Calle y número exterior</p>
+          </ion-item>
+          <ion-item>
+            <h2>{{ m.dir_num_int }}</h2>
+            <p>Número interior</p>
+          </ion-item>
+          <ion-item>
+            <h2>{{ m.dir_colonia }}</h2>
+            <p>Colonia</p>
+          </ion-item>
+          <ion-item>
+            <h2>{{ m.dir_delegacion }}</h2>
+            <p>Delegación</p>
+          </ion-item>
+          <ion-item>
+            <h2>{{ m.dir_CP }}</h2>
+            <p>Código Postal</p>
+          </ion-item>
+      </ion-item-group>
+
+
+</ion-content>

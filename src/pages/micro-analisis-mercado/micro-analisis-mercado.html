@@ -1,0 +1,28 @@
+<ion-header class="black-header">
+
+  <ion-navbar>
+    <ion-title>Análisis de micromercado</ion-title>
+  </ion-navbar>
+
+</ion-header>
+
+
+<ion-content padding>
+
+  <div class="text" *ngIf="0 == id">
+    {{ analisis }}
+  </div>
+
+<ion-item>
+  <ion-textarea *ngIf="0 !== id" [value]="analisis" [(ngModel)]="textSave">
+
+  </ion-textarea>
+</ion-item>
+
+</ion-content>
+
+<ion-footer>
+  <div class="submitlike" (click)="saveReporte()">
+    Continuar
+  </div>
+</ion-footer>

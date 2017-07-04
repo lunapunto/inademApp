@@ -1,0 +1,86 @@
+
+<ion-header class="green-header">
+
+  <ion-navbar>
+    <button ion-button menuToggle left>
+      <ion-icon name="menu"></ion-icon>
+    </button>
+    <ion-title>Inicio</ion-title>
+  </ion-navbar>
+
+
+
+
+</ion-header>
+
+<ion-menu [content]="mycontent" class="sidebar">
+<ion-content>
+
+  <div class="menu-slide-main">
+    <img src="assets/logoMenu.svg" />
+  </div>
+
+  <ion-list>
+
+    <ion-item (click)="menuTo('home', 0)">
+        <ion-icon name="phone-portrait" item-left></ion-icon>
+          Mi perfil
+    </ion-item>
+    <ion-item (click)="menuTo('home', 1)"   *ngIf="isevaluacion">
+        <ion-icon name="document" item-left></ion-icon>
+          Análisis
+    </ion-item>
+
+    <ion-item (click)="menuTo('evaluar')" *ngIf="isevaluacion">
+        <ion-icon name="checkmark-circle" item-left></ion-icon>
+          Evaluar asesor
+    </ion-item>
+
+    <ion-item  (click)="menuTo('editar-informacion')">
+        <ion-icon name="information" item-left></ion-icon>
+          Editar información
+    </ion-item>
+
+    <ion-item (click)="menuTo('avisos')">
+        <ion-icon name="alert" item-left></ion-icon>
+          Avisos
+    </ion-item>
+
+  </ion-list>
+  <div class="bottomLogout">
+    <h5>Aplicación del microempresario</h5>
+    <h5>Versión 1.19</h5>
+    <h1>{{currentUser.user}}</h1>
+    <h4 (click)="logout()">Cerrar sesión</h4>
+  </div>
+
+</ion-content>
+</ion-menu>
+
+<ion-content class="has-header">
+
+
+
+<ion-nav #mycontent [root]="rootPage"></ion-nav>
+
+  <ion-tabs  #myTabs tabsPlacement="top" >
+    <ion-tab [root]="tab1Root" tabTitle="Perfil"></ion-tab>
+    <ion-tab [root]="tab2Root" tabTitle="Análisis"  *ngIf="isevaluacion"></ion-tab>
+  </ion-tabs>
+
+
+
+</ion-content>
+
+
+
+<ion-footer>
+  <div class="footer-inadem">
+    <div class="circles">
+
+    </div>
+    <div class="bar">
+
+    </div>
+  </div>
+</ion-footer>

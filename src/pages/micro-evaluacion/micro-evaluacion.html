@@ -1,0 +1,118 @@
+<!--
+  Generated template for the MicroEvaluacion page.
+
+  See http://ionicframework.com/docs/v2/components/#navigation for more info on
+  Ionic pages and navigation.
+-->
+<ion-header>
+
+  <ion-navbar>
+    <ion-title>Evaluación de asesor</ion-title>
+  </ion-navbar>
+
+</ion-header>
+
+
+<ion-content>
+
+<ion-list>
+
+
+  <form class="form-container" (ngSubmit)="submitEvaluacion()">
+
+  <ion-item>
+    <ion-label floating>¿Los temas antes referidos se impartio una hora cada uno?</ion-label>
+    <ion-select [(ngModel)]="data.temas" multiple="true" name="temas">
+        <ion-option>Mercadotecnia</ion-option>
+        <ion-option>Operaciones contables y finanzas</ion-option>
+        <ion-option>Atención a clientes y ventas</ion-option>
+        <ion-option>Análisis del micromercado</ion-option>
+        <ion-option>Capacitación de endeudamiento</ion-option>
+        <ion-option>Entrega de Hardware</ion-option>
+      </ion-select>
+    </ion-item>
+    <ion-item>
+      <ion-label floating>¿Los temas antes referidos se impartieron en 1 hora cada uno? Es decir, el consultor estuvo al menos 6 horas en tu negocio?</ion-label>
+      <ion-select [(ngModel)]="data.temashoras" name="dispositivo">
+        <ion-option value="1">Sí</ion-option>
+        <ion-option value="2">No</ion-option>
+      </ion-select>
+    </ion-item>
+    <ion-item *ngIf="data.temashoras == 2">
+    <ion-label floating>¿Cuántas horas te atendió?</ion-label>
+    <ion-select [(ngModel)]="data.six_hours" name="six_hours">
+      <ion-option value="1">1</ion-option>
+      <ion-option value="2">2</ion-option>
+      <ion-option value="3">3</ion-option>
+      <ion-option value="4">4</ion-option>
+      <ion-option value="5">5</ion-option>
+      <ion-option value="6">6</ion-option>
+    </ion-select>
+  </ion-item>
+  <ion-item>
+    <ion-label floating>¿Qué opinas de la experiencia del consultor en los 6 temas referidos anteriormente? (Donde 1 es pésimo y 5 es excelente)</ion-label>
+    <ion-select [(ngModel)]="data.exp" name="exp">
+      <ion-option value="1">1</ion-option>
+      <ion-option value="2">2</ion-option>
+      <ion-option value="3">3</ion-option>
+      <ion-option value="4">4</ion-option>
+      <ion-option value="5">5</ion-option>
+    </ion-select>
+  </ion-item>
+  <ion-item>
+    <ion-label floating>Recomendarías al consultor que te atendió?</ion-label>
+    <ion-select [(ngModel)]="data.reco" name="reco">
+      <ion-option value="1">1</ion-option>
+      <ion-option value="2">2</ion-option>
+      <ion-option value="3">3</ion-option>
+      <ion-option value="4">4</ion-option>
+      <ion-option value="5">5</ion-option>
+    </ion-select>
+  </ion-item>
+  <ion-item>
+    <ion-label floating>¿Recibió el hardware (dispositivo)?</ion-label>
+    <ion-select [(ngModel)]="data.dispositivo" name="dispositivo">
+      <ion-option value="1">Sí</ion-option>
+      <ion-option value="2">No</ion-option>
+    </ion-select>
+  </ion-item>
+  <ion-item>
+    <ion-label floating>¿Recibió la explicación del uso y funcionamiento del hardware por parte del consultor?</ion-label>
+    <ion-select [(ngModel)]="data.exphard" name="exphard">
+      <ion-option value="1">Sí</ion-option>
+      <ion-option value="2">No</ion-option>
+    </ion-select>
+  </ion-item>
+  <ion-item *ngIf="data.exphard == 1">
+    <ion-label floating>Evalúe la explicación del hardware</ion-label>
+    <ion-select [(ngModel)]="data.exphardware_combo" name="exphardware_combo">
+      <ion-option value="1">1</ion-option>
+      <ion-option value="2">2</ion-option>
+      <ion-option value="3">3</ion-option>
+      <ion-option value="4">4</ion-option>
+      <ion-option value="5">5</ion-option>
+    </ion-select>
+  </ion-item>
+
+  <button ion-button type="submit" class="submit" color="light">Enviar</button>
+
+
+  </form>
+
+</ion-list>
+
+
+
+
+</ion-content>
+
+<ion-footer>
+  <div class="footer-inadem">
+    <div class="circles">
+
+    </div>
+    <div class="bar">
+
+    </div>
+  </div>
+</ion-footer>

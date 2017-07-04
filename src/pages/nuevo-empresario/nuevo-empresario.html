@@ -1,0 +1,12 @@
+<ion-tabs  #myTabs tabsPlacement="top" >
+  <ion-tab [root]="tab1Root" tabTitle="Geolocalización" (click)="return;"></ion-tab>
+  <ion-tab [root]="tab2Root" tabTitle="Encuesta" (click)="return;"></ion-tab>
+
+      <ion-tab [root]="tab3Root" tabTitle="Fotos" (click)="return;"></ion-tab>
+</ion-tabs>
+
+<ion-footer>
+  <ion-toolbar>
+    <ion-title class="timer" (click)="pauseTime()"><ion-icon name="pause" *ngIf="!inpause"></ion-icon><ion-icon name="time" *ngIf="inpause"></ion-icon> {{time}}</ion-title>
+  </ion-toolbar>
+</ion-footer>

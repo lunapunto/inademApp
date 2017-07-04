@@ -1,0 +1,13 @@
+page-encuesta {
+  .label{
+    text-overflow: none!important;
+    white-space: normal!important;
+  }
+  .swiper-container{
+    padding-bottom: 50px!important;
+    &.showing-keyboard{
+      height: auto!important;
+      transform: translateY(-30px);
+    }
+  }
+}

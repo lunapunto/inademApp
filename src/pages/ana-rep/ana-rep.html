@@ -1,0 +1,38 @@
+<!--
+  Generated template for the AnaRep page.
+
+  See http://ionicframework.com/docs/v2/components/#navigation for more info on
+  Ionic pages and navigation.
+-->
+<ion-header class="green-header">
+
+  <ion-navbar>
+    <ion-title>Análisis y Reporte</ion-title>
+  </ion-navbar>
+
+</ion-header>
+
+
+<ion-content>
+  <ion-item (click)="pushAnalisis('plan_accion')" *ngIf="analisis.isok_plan_accion">
+    <ion-icon name="arrow-forward" item-right></ion-icon>
+    <h2>Plan de acción</h2>
+    <h4>Generado el <br />{{analisis.fecha_analisis_plan_accion}}</h4>
+  </ion-item>
+
+  <ion-item  (click)="pushAnalisis('plan_financiamiento')" *ngIf="analisis.isok_financiamiento">
+    <ion-icon name="arrow-forward" item-right></ion-icon>
+    <h2>Análisis de financiamiento</h2>
+    <h4>Generado el <br />{{analisis.fecha_analisis_financiamiento}}</h4>
+  </ion-item>
+
+  <ion-item  (click)="pushAnalisis('analisis_micromercado')" *ngIf="analisis.isok_analisis">
+    <ion-icon name="arrow-forward" item-right></ion-icon>
+    <h2>Análisis de micromercado</h2>
+  </ion-item>
+
+  <ion-item (click)="pushAnalisis('reporte_micromercado')" *ngIf="analisis.isok_reporte">
+    <ion-icon name="arrow-forward" item-right></ion-icon>
+    <h2>Reporte Micromercado</h2>
+  </ion-item>
+</ion-content>

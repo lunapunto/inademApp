@@ -1,0 +1,45 @@
+<ion-header class="black-header">
+
+  <ion-navbar hideBackButton>
+    <ion-title>Ingresar</ion-title>
+  </ion-navbar>
+
+
+</ion-header>
+
+
+<ion-content padding>
+
+
+
+  <p class="instruction">
+    Accede con tu usuario<br />
+    y contraseña:
+  </p>
+
+    <form class="form-container"  (ngSubmit)="login()" novalidate>
+       <ion-item>
+         <ion-input type="email" name="email" [(ngModel)]="email" placeholder="Usuario"></ion-input>
+       </ion-item>
+       <ion-item>
+         <ion-input type="password" name="password" [(ngModel)]="password" placeholder="Contraseña"></ion-input>
+       </ion-item>
+       <button [attr.disabled]="isLoading ? '' : null" ion-button type="submit" class="submit" color="light">Ingresar</button>
+     </form>
+
+    <div class="button-trigger" (click)="showForgottenPassword()">
+      Olvidé mi contraseña
+    </div>
+
+</ion-content>
+
+<ion-footer>
+  <div class="footer-inadem">
+    <div class="circles">
+
+    </div>
+    <div class="bar">
+
+    </div>
+  </div>
+</ion-footer>
