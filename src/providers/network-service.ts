@@ -1,6 +1,5 @@
 import { Injectable } from '@angular/core';
 import { Http } from '@angular/http';
-import { Network } from 'ionic-native';
 import { Platform } from 'ionic-angular';
 import 'rxjs/add/operator/map';
 
@@ -22,12 +21,10 @@ export class NetworkService {
     } else {
       return navigator.onLine;
     }*/
-    var conn = this.checkConnection();
-    return  conn  !== 'none';
+    return  true;
   }
   checkConnection() {
-    var networkState = Network.type;
-    return networkState;
+    return true;
   }
 
 
@@ -39,8 +36,7 @@ export class NetworkService {
       return !navigator.onLine;
     }
     */
-    var conn = this.checkConnection();
-    return  conn  == 'none';
+    return false;
   }
 
 }

@@ -4,7 +4,7 @@ import { AsesoriaProfilePage } from '../asesoria-profile/asesoria-profile';
 import { AsesoriaAnalisisPage } from '../asesoria-analisis/asesoria-analisis';
 import { NetworkService } from '../../providers/network-service';
 import { ApiCalls } from '../../providers/api-calls';
-import { Geolocation } from 'ionic-native';
+import { Geolocation } from '@ionic-native/geolocation';
 import { HomeRepPage } from '../home-rep/home-rep';
 import { Events } from 'ionic-angular';
 
@@ -19,7 +19,7 @@ declare var Timer;
 @Component({
   selector: 'page-asesoria',
   templateUrl: 'asesoria.html',
-  providers: [NetworkService,ApiCalls]
+  providers: [NetworkService,ApiCalls,Geolocation]
 })
 export class AsesoriaPage {
   visita: any;
@@ -35,7 +35,7 @@ export class AsesoriaPage {
   vparams: any;
   is_analisis = false;
   inter = false;
-  constructor(public navCtrl: NavController, public events: Events, public appCtrl: App, public alert: AlertController, public api: ApiCalls, public loading: LoadingController, public network: NetworkService, public navParams: NavParams) {
+  constructor(public navCtrl: NavController, public geolocation: Geolocation, public events: Events, public appCtrl: App, public alert: AlertController, public api: ApiCalls, public loading: LoadingController, public network: NetworkService, public navParams: NavParams) {
     var id = navParams.data.idnegocio;
     this.timer = null;
     var params = navParams.data.newvisitaParams;
@@ -70,7 +70,7 @@ export class AsesoriaPage {
     latitude = parseFloat(latitude);
     longitude = parseFloat(longitude);
     var self = this;
-    let watch = Geolocation.watchPosition({enableHighAccuracy: true});
+    let watch = this.geolocation.watchPosition({enableHighAccuracy: true});
 
     watch.subscribe( data => {
       var lat = data.coords.latitude;

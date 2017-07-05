@@ -1,7 +1,6 @@
 import { Component } from '@angular/core';
 import { NavController, NavParams } from 'ionic-angular';
 import { ApiCalls } from '../../providers/api-calls';
-import { InAppBrowser } from 'ionic-native';
 /*
   Generated class for the AnaRep page.
 

@@ -4,8 +4,8 @@ import { ApiCalls } from '../../providers/api-calls';
 import { CookieJS } from '../../providers/cookie-js';
 import { Storage } from '@ionic/storage';
 import { LoginPage } from'../login/login';
-import { CallNumber } from 'ionic-native';
-import { OneSignal } from 'ionic-native';
+import { CallNumber } from '@ionic-native/call-number';
+import { OneSignal } from '@ionic-native/onesignal';
 import { AvisosPage } from '../avisos/avisos';
 import { NuevoEmpresarioPage } from '../nuevo-empresario/nuevo-empresario';
 import { AsesoriaPage } from '../asesoria/asesoria';
@@ -46,7 +46,7 @@ export class HomeRepPage {
     'com.ltp.fakelocation'
   ];
 
-  constructor(public platform: Platform, public geolocation: Geolocation, public navCtrl: NavController,private appAvailability: AppAvailability,public loading: LoadingController,   public network: NetworkService, public appCtrl: App, public menuCtrl: MenuController, public alert: AlertController,public storage: Storage, public navParams: NavParams, public cookie: CookieJS, public api: ApiCalls) {
+  constructor(public platform: Platform,public callnumber: CallNumber, public geolocation: Geolocation, public navCtrl: NavController,private appAvailability: AppAvailability,public loading: LoadingController,   public network: NetworkService, public appCtrl: App, public menuCtrl: MenuController, public alert: AlertController,public storage: Storage, public navParams: NavParams, public cookie: CookieJS, public api: ApiCalls) {
     var scs = this.cookie.get('inadem_sc');
         scs = JSON.parse(scs);
     this.email = scs['email'];
@@ -120,6 +120,7 @@ export class HomeRepPage {
   }
   promptSoporte(){
     var number = '5556610138';
+    var self = this;
     let prompt = this.alert.create({
       title: '¿Llamar a soporte?',
       message: '¿Marcar al número '+number+' de soporte del INADEM?',
@@ -133,7 +134,7 @@ export class HomeRepPage {
         {
           text: 'Sí',
           handler: () => {
-            CallNumber.callNumber(number, true);
+            self.callnumber.callNumber(number, true);
           }
         }
       ]
@@ -184,6 +185,7 @@ export class HomeRepPage {
   }
 
   setDeviceID(){
+    /*
   OneSignal.startInit('2f9c5b83-2619-44ad-8506-ab3fd819ba3e', '593478426682');
   OneSignal.setSubscription(true);
 
@@ -197,6 +199,7 @@ export class HomeRepPage {
       })
     }
   });
+  */
   }
   menuTo(page, index){
     this.menuCtrl.close();

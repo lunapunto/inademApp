@@ -1,6 +1,9 @@
 import { Component, ViewChild } from '@angular/core';
 import { Platform } from 'ionic-angular';
-import { StatusBar,Keyboard, Splashscreen } from 'ionic-native';
+import { SplashScreen } from '@ionic-native/splash-screen';
+import { StatusBar } from '@ionic-native/status-bar';
+import { Keyboard } from '@ionic-native/keyboard';
+
 import { NavController } from 'ionic-angular';
 import { StandbyPage } from '../pages/standby/standby';
 import { HomePage } from '../pages/home/home';
@@ -13,7 +16,7 @@ import { CookieJS } from '../providers/cookie-js';
 
 @Component({
   template: '<ion-nav #myNav [root]="rootPage"></ion-nav>',
-  providers: [ UserAuth, CookieJS ]
+  providers: [ UserAuth, CookieJS, Keyboard, StatusBar, SplashScreen ]
 })
 
 export class MyApp {
@@ -21,11 +24,11 @@ export class MyApp {
   rootPage = StandbyPage;
   self = this;
 
-  constructor(public platform: Platform, public userAuth : UserAuth, public cookie: CookieJS) {
+  constructor(public platform: Platform, public userAuth : UserAuth, public statusbar: StatusBar, public keyboard: Keyboard, public splashscreen: SplashScreen, public cookie: CookieJS) {
     platform.ready().then(() => {
-      StatusBar.styleDefault();
-      Splashscreen.hide();
-      StatusBar.backgroundColorByHexString('#72bf44');
+      this.statusbar.styleDefault();
+      this.splashscreen.hide();
+      this.statusbar.backgroundColorByHexString('#72bf44');
       if(this.userAuth.islogged){
         var authCookie = this.cookie.get('inadem_sc');
             authCookie = JSON.parse(authCookie);
@@ -42,7 +45,7 @@ export class MyApp {
   }
   ngOnInit() {
     this.platform.ready().then(() => {
-          Keyboard.disableScroll(false);
+          this.keyboard.disableScroll(false);
         });
    }
 }

@@ -4,7 +4,7 @@ import { AlertController } from 'ionic-angular';
 import { NetworkService } from '../../providers/network-service';
 import { ApiCalls } from '../../providers/api-calls';
 import { LoginPage } from '../login/login';
-import { StatusBar, Splashscreen } from 'ionic-native';
+import { StatusBar } from '@ionic-native/status-bar';
 
 /*
   Generated class for the PasswordPage page.
@@ -28,7 +28,6 @@ export class PasswordPagePage {
   isLoading = false;
   rpassword: any;
   constructor(public navCtrl: NavController, public navParams: NavParams, public alert : AlertController, public network : NetworkService, public api : ApiCalls) {
-    StatusBar.backgroundColorByHexString('#222222');
 
   }
 

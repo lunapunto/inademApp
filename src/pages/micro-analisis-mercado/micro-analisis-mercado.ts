@@ -4,7 +4,7 @@ import { NetworkService } from '../../providers/network-service';
 import { CookieJS } from '../../providers/cookie-js';
 import { Storage } from '@ionic/storage';
 import { ApiCalls } from '../../providers/api-calls';
-import { StatusBar, Splashscreen } from 'ionic-native';
+import { StatusBar } from '@ionic-native/status-bar';
 import { Events } from 'ionic-angular';
 
 
@@ -25,7 +25,6 @@ export class MicroAnalisisMercadoPage {
   id = 0;
   textSave = '';
   constructor(public navCtrl: NavController, public events: Events,public storage: Storage, public loadingCtrl: LoadingController, public alert: AlertController, public network: NetworkService,  public api: ApiCalls, public cookie: CookieJS, public navParams: NavParams) {
-    StatusBar.backgroundColorByHexString('#222222');
     var isasesor = navParams.data.from;
     if(isasesor == 'asesor'){
       this.isasesor = true;

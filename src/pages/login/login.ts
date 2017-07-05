@@ -8,7 +8,7 @@ import { NetworkService } from '../../providers/network-service';
 import { PasswordPagePage } from '../password-page/password-page';
 import { HomePage } from '../home/home';
 import { HomeRepPage } from '../home-rep/home-rep';
-import { StatusBar, Splashscreen } from 'ionic-native';
+import { StatusBar } from '@ionic-native/status-bar';
 
 /*
   Generated class for the Login page.
@@ -30,7 +30,6 @@ export class LoginPage {
   constructor(public navCtrl: NavController, public navParams: NavParams, public userAuth: UserAuth, public alert: AlertController, public api : ApiCalls, public network: NetworkService, public loadingCtrl: LoadingController) {
     var islogout = navParams.data.isLogout;
     var paramEmail = this.navParams.data.email;
-    StatusBar.backgroundColorByHexString('#222222');
 
     if(paramEmail){
       this.email = paramEmail;

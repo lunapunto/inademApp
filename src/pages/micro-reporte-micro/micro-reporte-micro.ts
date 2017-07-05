@@ -9,7 +9,6 @@ import { NetworkService } from '../../providers/network-service';
 import { MicroPerfilPage } from '../micro-perfil/micro-perfil';
 import { MicroReportePage } from '../micro-reporte/micro-reporte';
 import { MicroEvaluacionPage } from '../micro-evaluacion/micro-evaluacion';
-import { InAppBrowser } from 'ionic-native';
 
 /*
   Generated class for the MicroReporteMicro page.
@@ -66,7 +65,6 @@ export class MicroReporteMicroPage {
           alert.present();
         }else if(msg){
 
-          new InAppBrowser(msg,'_system','location=yes');
           this.navCtrl.pop();
         }
       })

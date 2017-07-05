@@ -5,7 +5,7 @@ import { CookieJS } from '../../providers/cookie-js';
 import { Storage } from '@ionic/storage';
 import { ApiCalls } from '../../providers/api-calls';
 import { HomePage } from '../home/home';
-import { StatusBar, Splashscreen } from 'ionic-native';
+import { StatusBar } from '@ionic-native/status-bar';
 
 /*
   Generated class for the MicroEvaluacion page.
@@ -33,7 +33,6 @@ export class MicroEvaluacionPage {
   };
 
   constructor(public navCtrl: NavController, public loadingCtrl: LoadingController, public api: ApiCalls, public storage: Storage, public cookie: CookieJS, public network: NetworkService, public navParams: NavParams, public alert: AlertController) {
-    StatusBar.backgroundColorByHexString('#222222');
 
   }
 

@@ -11,7 +11,6 @@ import { MicroReporteMicroPage } from '../micro-reporte-micro/micro-reporte-micr
 import { MicroAnalisisMercadoPage } from '../micro-analisis-mercado/micro-analisis-mercado';
 import { BatteryStatus } from '@ionic-native/battery-status';
 import { Events } from 'ionic-angular';
-import { InAppBrowser } from 'ionic-native';
 import { ViewPDFPage } from '../view-pdf/view-pdf';
 import { FileOpener } from '@ionic-native/file-opener';
 

@@ -5,7 +5,7 @@ import { ApiCalls } from '../../providers/api-calls';
 import { CookieJS } from '../../providers/cookie-js';
 import { Storage } from '@ionic/storage';
 import { NetworkService } from '../../providers/network-service';
-import { StatusBar, Splashscreen } from 'ionic-native';
+import { StatusBar } from '@ionic-native/status-bar';
 
 /*
   Generated class for the MicroEdit page.
@@ -22,7 +22,6 @@ export class MicroEditPage {
   email: any;
   tel: any;
   constructor(public navCtrl: NavController, public navParams: NavParams, public loadingCtrl: LoadingController, public alert: AlertController, public storage: Storage, public userAuth: UserAuth, public api: ApiCalls, public cookie: CookieJS, public network: NetworkService) {
-    StatusBar.backgroundColorByHexString('#222222');
 
   }
 

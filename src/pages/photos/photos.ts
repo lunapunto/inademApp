@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { NavController,AlertController, LoadingController, NavParams } from 'ionic-angular';
-import { Camera } from 'ionic-native';
+import { Camera, CameraOptions } from '@ionic-native/camera';
 import { Events } from 'ionic-angular';
 import { NetworkService } from '../../providers/network-service';
 
@@ -33,10 +33,10 @@ export class PhotosPage {
     loading.present();
     var options = {
       destinationType: 0,
-      sourceType : Camera.PictureSourceType.CAMERA,
+      sourceType : this.camera.PictureSourceType.CAMERA,
       allowEdit : false
     }
-    Camera.getPicture(options).then((imageData) => {
+    this.camera.getPicture(options).then((imageData) => {
      let base64Image = 'data:image/jpeg;base64,' + imageData;
      this.photoLocal = base64Image;
      loading.dismiss();
@@ -58,7 +58,7 @@ export class PhotosPage {
     var options = {
       destinationType: 0
     }
-    Camera.getPicture(options).then((imageData) => {
+    this.camera.getPicture(options).then((imageData) => {
      let base64Image = 'data:image/jpeg;base64,' + imageData;
      this.photoMicroempresario = base64Image;
      loading.dismiss();

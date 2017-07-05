@@ -9,7 +9,6 @@ import { MicroPlanAccionPage } from '../micro-plan-accion/micro-plan-accion';
 import { MicroPlanFinanciamientoPage } from '../micro-plan-financiamiento/micro-plan-financiamiento';
 import { MicroReporteMicroPage } from '../micro-reporte-micro/micro-reporte-micro';
 import { MicroAnalisisMercadoPage } from '../micro-analisis-mercado/micro-analisis-mercado';
-import { InAppBrowser } from 'ionic-native';
 
 /*
   Generated class for the MicroReporte page.

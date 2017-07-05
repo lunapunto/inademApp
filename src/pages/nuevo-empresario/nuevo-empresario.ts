@@ -7,7 +7,7 @@ import { PhotosPage } from '../photos/photos';
 import { Events } from 'ionic-angular';
 import { ApiCalls } from '../../providers/api-calls';
 import { CookieJS } from '../../providers/cookie-js';
-import { Geolocation } from 'ionic-native';
+import { Geolocation } from '@ionic-native/geolocation';
 import { Storage } from '@ionic/storage';
 
 declare var Timer;
@@ -20,7 +20,7 @@ declare var Timer;
 @Component({
   selector: 'page-nuevo-empresario',
   templateUrl: 'nuevo-empresario.html',
-  providers: [ApiCalls, CookieJS, Storage]
+  providers: [ApiCalls, CookieJS, Storage, Geolocation]
 })
 export class NuevoEmpresarioPage {
   tab1Root = AsesoriaLocPage;
@@ -49,7 +49,7 @@ export class NuevoEmpresarioPage {
     seconds: 0,
     secondsTenths: 0
   };
-  constructor(public navCtrl: NavController, public storage: Storage, public cookie: CookieJS, public events: Events, public loading: LoadingController, public api: ApiCalls, public appCtrl: App, public alert: AlertController, public navParams: NavParams) {
+  constructor(public navCtrl: NavController, public storage: Storage, public geolocation: Geolocation, public cookie: CookieJS, public events: Events, public loading: LoadingController, public api: ApiCalls, public appCtrl: App, public alert: AlertController, public navParams: NavParams) {
     var scs = this.cookie.get('inadem_sc');
         scs = JSON.parse(scs);
     var self = this;
@@ -93,7 +93,7 @@ export class NuevoEmpresarioPage {
     latitude = parseFloat(latitude);
     longitude = parseFloat(longitude);
     var self = this;
-    let watch = Geolocation.watchPosition();
+    let watch = this.geolocation.watchPosition();
 
     watch.subscribe( data => {
       var lat = data.coords.latitude;

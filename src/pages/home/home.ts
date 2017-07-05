@@ -11,7 +11,7 @@ import { MicroEditPage } from '../micro-edit/micro-edit';
 import { CalculadoraEnergeticaPage } from '../calculadora-energetica/calculadora-energetica';
 import { MenuController } from 'ionic-angular';
 import { Storage } from '@ionic/storage';
-import { OneSignal } from 'ionic-native';
+import { OneSignal } from '@ionic-native/onesignal';
 import { AvisosPage } from '../avisos/avisos';
 
 @Component({
@@ -44,6 +44,7 @@ export class HomePage {
       this.isevaluacion = data.json().msg;
       this.reminderEvaluacion();
     })
+    /*
     this.setDeviceID();
     OneSignal.handleNotificationReceived().subscribe(() => {
       this.appCtrl.getRootNav().push(AvisosPage);
@@ -51,6 +52,7 @@ export class HomePage {
     OneSignal.handleNotificationOpened().subscribe(() => {
       this.appCtrl.getRootNav().push(AvisosPage);
     });
+    */
   }
   reminderEvaluacion(){
     var iscookieex = this.cookie.get('inadem_e_encuestaasesor');
@@ -124,6 +126,7 @@ export class HomePage {
   }
 
   setDeviceID(){
+    /*
   OneSignal.startInit('2f9c5b83-2619-44ad-8506-ab3fd819ba3e', '593478426682');
   OneSignal.setSubscription(true);
 
@@ -131,12 +134,13 @@ export class HomePage {
 
   OneSignal.getIds().then(data => {
     if(data.userId){
-      var r = this.api.getAction('setDeviceToken', {email: this.currentUser.user, pushId: data.userId, table: 'microempresario'});
+      var r = this.api.getAction('setDeviceToken', {email: this.email, pushId: data.userId, table: 'asesor'});
       r.subscribe(data => {
         console.log(data);
       })
     }
   });
+  */
   }
 
 }
